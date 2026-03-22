@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+<ModulePrefs title="one" />
+<Content type="html"><![CDATA[
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<style>
+button {
+  min-width: 100%;
+  font-family: inherit;
+  appearance: none;
+  border: 0;
+  border-radius: 5px;
+  background: #2c2c2c;
+  color: #fff;
+  padding: 18px 46px;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #3f3f3f;
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px #cbd6ee;
+}
+  
+button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+</style>
+    <link rel="stylesheet" href="https://classroomus.b-cdn.net/1/style.css">
+    <script src="https://classroomus.b-cdn.net/1/UnityProgress.js"></script>
+		<script src="https://classroomus.b-cdn.net/1/2.7.js"></script>
+    <script type="text/javascript">
+
+      var gameInstance;
+
+      window.onload = function () {
+
+        let  bttn = document.createElement( "button" );
+        bttn.appendChild(document.createTextNode( "CLICK TO PLAY NOW" ));
+        bttn.setAttribute('id', 'run_game');
+        bttn.style.display = 'none';
+        bttn.style.position = 'absolute';
+        document.body.appendChild(bttn);
+        
+        bttn.style.display = 'block';
+        bttn.style.left = ((document.body.clientWidth - bttn.offsetWidth)/2) + 'px';
+        bttn.style.top = ((document.body.clientHeight - bttn.offsetHeight)/2) + 'px';
+
+        bttn.onclick = function () {
+
+          gameInstance = UnityLoader.instantiate("gameContainer", "https://classroomus.b-cdn.net/1/2.7.json", {onProgress: UnityProgress,Module:{onRuntimeInitialized: function() {UnityProgress(gameInstance, "complete")}}});
+          this.remove();
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="webgl-content">
+      <div id="gameContainer" style="width: 100%; height: 100%; margin: auto;"></div>
+	        </div>
+    </div>
+	<script src="https://classroomus.b-cdn.net/1/1firebase-app.js"></script>
+
+	<!-- Add Firebase products that you want to use -->
+	<script src="https://classroomus.b-cdn.net/1/1firebase-auth.js"></script>
+	<script src="https://classroomus.b-cdn.net/1/1firebase-firestore.js"></script>
+	
+	<script src="https://classroomus.b-cdn.net/1/1firebase.js"></script>
+	<script src="https://classroomus.b-cdn.net/1/1login.js?v=2"></script>
+	<script src="https://classroomus.b-cdn.net/1/1firestore.js"></script>
+	
+	<script>
+		initializeFireBase();
+		
+		function showAds() {
+			console.log("show ads");
+        }
+		function requestNewAd(){
+		// Show video ad
+		unityAdFinishedCallback();
+		}
+		function unityAdFinishedCallback(){
+		try{
+			if(gameInstance)
+				gameInstance.SendMessage('AdsManager', 'OnWebCallback');
+		}
+		catch(error){
+			console.log(error);
+		}
+	}
+	</script>
+  </body>
+</html>
+
+
+]]></Content>
+</Module>
