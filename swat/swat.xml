@@ -2,7 +2,6 @@
 <Module>
 <ModulePrefs title="" />
 <Content type="html"><![CDATA[
-
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
@@ -10,7 +9,107 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Time Shooter 3 SWAT</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/swat/style.css">
+    <style>
+      html {
+          box-sizing: border-box;
+      }
+      *, *:before, *:after {
+          box-sizing: inherit;
+      }
+      html, body {
+          height: 100%;
+      }
+      canvas {
+          display: block;
+      }
+      body {
+          margin: 0;
+      }
+      #unity-container {
+          width: 100%;
+          height: 100%;
+      }
+      #unity-canvas {
+          width: 100%;
+          height: 100%;
+          background: #FFFFFF;
+      }
+      #loading-cover {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+      }
+      #unity-loading-bar {
+          flex: 1 1 auto;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+      }
+      #unity-logo {
+          text-align: center;
+      }
+      #unity-logo img {
+          max-width: 80%;
+      }
+      #unity-progress-bar-empty {
+          width: 80%;
+          height: 24px;
+          margin: 10px 20px 20px 10px;
+          text-align: left;
+          border: 1px solid white;
+          padding: 2px;
+          border-radius: 10%;
+      }
+      #unity-progress-bar-full {
+          width: 0%;
+          height: 100%;
+          background: orange;
+          border-radius: 10%;
+      }
+      .light #unity-progress-bar-empty {
+          border-color: black;
+      }
+      .light #unity-progress-bar-full {
+          background: orange;
+      }
+      #unity-fullscreen-button {
+          position: absolute;
+          right: 10px;
+          bottom: 10px;
+          width: 38px;
+          height: 38px;
+          background: url('fullscreen-button.png') no-repeat center;
+          background-size: contain;
+      }
+      .spinner,
+      .spinner:after {
+        border-radius: 50%;
+        width: 5em;
+        height: 5em;
+      }
+      .spinner {
+        margin: 10px;
+        font-size: 10px;
+        position: relative;
+        text-indent: -9999em;
+        border-top: 1.1em solid rgba(255, 255, 255, 0.2);
+        border-right: 1.1em solid rgba(255, 255, 255, 0.2);
+        border-bottom: 1.1em solid rgba(255, 255, 255, 0.2);
+        border-left: 1.1em solid #ffffff;
+        transform: translateZ(0);
+        animation: spinner-spin 1.1s infinite linear;
+      }
+      @keyframes spinner-spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
   </head>
   <body class="dark">
     <div id="unity-container" class="unity-desktop">
@@ -39,7 +138,6 @@
         productName: "Time Shooter SWAT",
         productVersion: "0.03",
       };
-
       const container = document.querySelector("#unity-container");
       const canvas = document.querySelector("#unity-canvas");
       const loadingCover = document.querySelector("#loading-cover");
@@ -47,7 +145,6 @@
       const progressBarFull = document.querySelector("#unity-progress-bar-full");
       const fullscreenButton = document.querySelector("#unity-fullscreen-button");
       const spinner = document.querySelector('.spinner');
-
       const canFullscreen = (function() {
         for (const key of [
             'exitFullscreen',
@@ -62,14 +159,12 @@
         }
         return false;
       }());
-
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         container.className = "unity-mobile";
         config.devicePixelRatio = 1;
       }
       canvas.style.background = "url('" + buildUrl + "/ts3.jpg') center / cover";
       loadingCover.style.display = "";
-
       const script = document.createElement("script");
       script.src = loaderUrl;
       script.onload = () => {
@@ -95,6 +190,5 @@
     </script>
   </body>
 </html>
-
 ]]></Content>
 </Module>

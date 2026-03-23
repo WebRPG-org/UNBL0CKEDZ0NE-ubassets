@@ -52,19 +52,20 @@ body {
     text-align: left;
     border: 1px solid white;
     padding: 2px;
+    border-radius: 10%;
 }
 #unity-progress-bar-full {
     width: 0%;
     height: 100%;
-    background: white;
+    background: orange;
+    border-radius: 10%;
 }
 .light #unity-progress-bar-empty {
     border-color: black;
 }
 .light #unity-progress-bar-full {
-    background: black;
+    background: orange;
 }
-
 #unity-fullscreen-button {
     position: absolute;
     right: 10px;
@@ -74,7 +75,6 @@ body {
     background: url('fullscreen-button.png') no-repeat center;
     background-size: contain;
 }
-
 .spinner,
 .spinner:after {
   border-radius: 50%;
@@ -101,5 +101,3 @@ body {
     transform: rotate(360deg);
   }
 }
-
-
