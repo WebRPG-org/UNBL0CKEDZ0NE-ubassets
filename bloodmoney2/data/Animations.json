@@ -1,0 +1,5 @@
+[
+null,
+{"id":1,"displayType":0,"alignBottom":false,"effectName":"","flashTimings":[],"name":"","offsetX":0,"offsetY":0,"rotation":{"x":0,"y":0,"z":0},"scale":100,"soundTimings":[],"speed":100,"timings":[]},
+{"id":2,"animation1Hue":0,"animation1Name":"Blood","animation2Hue":0,"animation2Name":"","frames":[[[0,0,0,50,0,0,255,0]],[[0,0,0,100,0,0,255,0]],[[0,0,0,125,0,0,255,0]],[[0,0,0,125,0,0,255,0]],[[0,0,0,125,0,0,255,0]]],"name":"Blood","position":1,"timings":[{"frame":0,"se":{"name":"SFX_Gore","pan":0,"pitch":150,"volume":40},"flashScope":0,"flashColor":[255,255,255,255],"flashDuration":5}],"flashTimings":[],"soundTimings":[]}
+]
