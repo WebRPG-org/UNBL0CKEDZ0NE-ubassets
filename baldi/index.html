@@ -2,7 +2,7 @@
 <html lang="en-us">
 
 <head>
-    <base href="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/baldi">
+    <base href="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/baldi/">
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Unity WebGL Player | Baldi's Basics Classic Remastered</title>
@@ -102,8 +102,8 @@
             return parts;
         }
         (async () => {
-            const dataParts = getParts("Build/WebGL.data", 3);
-            const wasmParts = getParts("Build/WebGL.wasm", 3);
+            const dataParts = getParts("https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/baldi/Build/WebGL.data", 3);
+            const wasmParts = getParts("https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/baldi/Build/WebGL.wasm", 3);
             const allParts = [...dataParts, ...wasmParts];
             const sizes = await Promise.all(allParts.map(getSize));
             totalBytes = sizes.reduce((a, b) => a + b, 0);
@@ -113,7 +113,7 @@
             ]);
             createUnityInstance(document.querySelector("#unity-canvas"), {
                 dataUrl: dataUrl,
-                frameworkUrl: "Build/WebGL.framework.js",
+                frameworkUrl: "https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/baldi/Build/WebGL.framework.js",
                 codeUrl: wasmUrl,
                 streamingAssetsUrl: "StreamingAssets",
                 companyName: "Basically Games",

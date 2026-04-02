@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
         <base 
-                href="https://cdn.jsdelivr.net/gh/webporting/Untitled-Goose-Game@latest/">
+                href="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/goosegame/">
 <head>
         <title>Untitled Goose Game - UNBL0CKEDZ0NE</title>
         <meta 
@@ -84,7 +84,7 @@
                 <div id="game-container">
                         <canvas id="unity-canvas" tabindex="-1"></canvas>
                         <div id="loading">
-                                <img src="goose.png" alt="Goose Icon">
+                                <img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/goosegame/goose.png" alt="Goose Icon">
                                 <span>UNTITLED GOOSE GAME</span>
                         </div>
                 </div>
@@ -106,13 +106,13 @@
                 }
                 async function init() {
                         try {
-                                const dataBlob = await mergeFiles('Build/Untitled Goose Game.data', 4);
-                                const wasmBlob = await mergeFiles('Build/Untitled Goose Game.wasm', 2);
+                                const dataBlob = await mergeFiles('https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/goosegame/Build/Untitled Goose Game.data', 4);
+                                const wasmBlob = await mergeFiles('https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/goosegame/Build/Untitled Goose Game.wasm', 2);
                                 const dataUrl = URL.createObjectURL(dataBlob);
                                 const wasmUrl = URL.createObjectURL(new Blob([wasmBlob], { type: 'application/wasm' }));
                                 createUnityInstance(document.querySelector("#unity-canvas"), {
                                         dataUrl: dataUrl,
-                                        frameworkUrl: "Build/Untitled Goose Game.framework.js",
+                                        frameworkUrl: "https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/goosegame/Build/Untitled Goose Game.framework.js",
                                         codeUrl: wasmUrl,
                                         streamingAssetsUrl: "StreamingAssets",
                                         companyName: "House House _ Bog",

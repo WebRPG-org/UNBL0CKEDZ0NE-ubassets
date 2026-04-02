@@ -1,4 +1,96 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fullscreen Button</title>
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+  <style>
+    #fullscreenButton {
+      position: fixed;
+      bottom: 12px;
+      right: 12px;
+      background-color: #111;
+      color: #fff;
+      border: 2px solid #ff9900;
+      font-size: 12px;
+      font-family: 'Audiowide', sans-serif;
+      padding: 8px 14px;
+      cursor: pointer;
+      border-radius: 8px;
+      letter-spacing: 1px;
+      box-shadow: 0 0 10px #ff9900;
+      transition: all 0.3s ease;
+      z-index: 9999;
+    }
+    .fireInside {
+      background-image: linear-gradient(270deg, red, orange, yellow);
+      background-size: 300% 300%;
+      animation: fireInside 3s linear infinite;
+      color: #fff;
+      text-shadow: 0 0 8px rgba(255,255,255,0.7);
+      box-shadow: inset 0 0 10px rgba(255,165,0,0.4), 0 0 14px #ff9900;
+    }
+    @keyframes fireInside {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
+</head>
+<body>
+
+  <button
+    id="fullscreenButton"
+    onclick="openPage()"
+    onmouseover="this.classList.add('fireInside')"
+    onmouseout="this.classList.remove('fireInside')">
+    ⛶ Fullscreen
+  </button>
+
+  <script>
+    // 🟠 SET YOUR CDN URL HERE
+    var url = "https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/bloodmoney/index.html";
+
+    var ORIGINAL_TEXT = "⛶ Fullscreen";
+    var ERROR_TEXT    = "Not Found!";
+    var POPUP_TEXT    = "Allow Popups!";
+
+    function setTemp(text, ms) {
+      var btn = document.getElementById("fullscreenButton");
+      btn.innerText = text;
+      btn.classList.add("fireInside");
+      setTimeout(function() {
+        btn.innerText = ORIGINAL_TEXT;
+        btn.classList.remove("fireInside");
+      }, ms || 3500);
+    }
+
+    function openPage() {
+      fetch(url + "?t=" + Date.now())
+        .then(function(r) {
+          if (!r.ok) throw new Error("not found");
+          return r.text();
+        })
+        .then(function(html) {
+          var win = window.open("about:blank", "_blank");
+          if (!win) { setTemp(POPUP_TEXT, 4500); return; }
+          win.document.open();
+          win.document.write(html);
+          win.document.close();
+          document.getElementById("fullscreenButton").innerText = "Opened!";
+          setTimeout(function() {
+            document.getElementById("fullscreenButton").innerText = ORIGINAL_TEXT;
+          }, 3000);
+        })
+        .catch(function() {
+          setTemp(ERROR_TEXT);
+        });
+    }
+  </script>
+
+</body>
+</html>
+<!DOCTYPE html>
 <html>
     <head>
         <base href="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/bloodmoney/">
@@ -6,26 +98,26 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
         <meta name="viewport" content="user-scalable=no">
-        <link rel="icon" href="icon/icon.png" type="image/png">
-        <link rel="apple-touch-icon" href="icon/icon.png">
-        <link rel="stylesheet" type="text/css" href="fonts/gamefont.css">
+        <link rel="icon" href="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/bloodmoney/icon/icon.png" type="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/bloodmoney/image/png">
+        <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/bloodmoney/icon/icon.png">
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/bloodmoney/fonts/gamefont.css">
         <title>BLOODMONEY!</title>
     </head>
     <body style="background-color: black">
-        <script type="text/javascript" src="js/libs/pixi.js"></script>
-        <script type="text/javascript" src="js/libs/pixi-tilemap.js"></script>
-        <script type="text/javascript" src="js/libs/pixi-picture.js"></script>
-        <script type="text/javascript" src="js/libs/fpsmeter.js"></script>
-        <script type="text/javascript" src="js/libs/lz-string.js"></script>
-        <script type="text/javascript" src="js/libs/iphone-inline-video.browser.js"></script>
-        <script type="text/javascript" src="js/rpg_core.js"></script>
-        <script type="text/javascript" src="js/rpg_managers.js"></script>
-        <script type="text/javascript" src="js/rpg_objects.js"></script>
-        <script type="text/javascript" src="js/rpg_scenes.js"></script>
-        <script type="text/javascript" src="js/rpg_sprites.js"></script>
-        <script type="text/javascript" src="js/rpg_windows.js"></script>
-        <script type="text/javascript" src="js/plugins.js"></script>
-        <script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/bloodmoney/js/libs/pixi.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/bloodmoney/js/libs/pixi-tilemap.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/bloodmoney/js/libs/pixi-picture.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/bloodmoney/js/libs/fpsmeter.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/bloodmoney/js/libs/lz-string.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/bloodmoney/js/libs/iphone-inline-video.browser.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/bloodmoney/js/rpg_core.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/bloodmoney/js/rpg_managers.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/bloodmoney/js/rpg_objects.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/bloodmoney/js/rpg_scenes.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/bloodmoney/js/rpg_sprites.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/bloodmoney/js/rpg_windows.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/bloodmoney/js/plugins.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/bloodmoney/js/main.js"></script>
     <script>
         
         // full screen the game ----------------------------------------------------------
