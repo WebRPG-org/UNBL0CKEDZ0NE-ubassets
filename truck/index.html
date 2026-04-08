@@ -3,128 +3,103 @@
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>Indian Truck Driving - UNBL0CKEDZ0NE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      overflow: hidden;
-    }
-
-    #gameContainer canvas {
-      display:block;
-    }
-
+    * { margin: 0; padding: 0; }
+    body { overflow: hidden; }
+    #gameContainer canvas { display:block; }
     div#webgl-content {
       position: absolute;
-      top: 50%;
-      left: 50%;
+      top: 50%; left: 50%;
       -webkit-transform: translate(-50%, -50%);
       transform: translate(-50%, -50%);
     }
-
     div#loadingBox {
-      width: 100%;
-      height: 0px;
+      width: 100%; height: 0px;
       position: absolute;
-      top: 50%;
-      margin-top: 137px;
+      top: 50%; margin-top: 137px;
       text-align: center;
     }
-
     div#icon {
-      width: 300px;
-      height: 310px;
+      width: 300px; height: 310px;
       position: absolute;
-      top: 50%;
-      left: 50%;
-      margin-top: -185px;
-      margin-left: -150px;
+      top: 50%; left: 50%;
+      margin-top: -185px; margin-left: -150px;
       background-image: url("https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets/truck/TemplateData/ub.png");
       background-repeat: no-repeat;
       box-shadow: 1px 1px 5px #141414;
     }
-
     div#box {
-      width: 328px;
-      height: 367px;
+      width: 328px; height: 367px;
       position: absolute;
-      top: 50%;
-      left: 50%;
-      margin-top: -199px;
-      margin-left: -164px;
+      top: 50%; left: 50%;
+      margin-top: -199px; margin-left: -164px;
       background: #222;
       box-shadow: 1px 1px 5px #000;
     }
-
     div#bgBar {
       display: none;
       position: absolute;
-      width: 300px;
-      margin-left: -150px;
-      left: 50%;
-      height: 18px;
+      width: 300px; margin-left: -150px;
+      left: 50%; height: 18px;
       background-color: #882121;
       box-shadow: 1px 1px 5px #111;
     }
-
     div#progressBar {
       display: none;
-      left: 50%;
-      position: absolute;
+      left: 50%; position: absolute;
       margin-left: -150px;
-      width: 0px;
-      height: 18px;
+      width: 0px; height: 18px;
       background-color: #dc4241;
     }
-
     p#loadingInfo {
-      color: #fff;
-      letter-spacing: 1px;
-      position: absolute;
-      width: 100%;
-      font-family: sans-serif;
-      text-align: center;
-      top: 50%;
-      font-size: 11px;
-      font-weight: 500;
+      color: #fff; letter-spacing: 1px;
+      position: absolute; width: 100%;
+      font-family: sans-serif; text-align: center;
+      top: 50%; font-size: 11px; font-weight: 500;
       margin-top: 140px;
       text-shadow: 0px 0px 5px #000;
     }
-
     div#spinner {
-      position: absolute;
-      height: 18px;
-      left: 50%;
-      margin-left: -150px;
-      width: 300px;
-      position: relative;
-      overflow: hidden;
-      background-color: #882121;
+      position: absolute; height: 18px;
+      left: 50%; margin-left: -150px;
+      width: 300px; position: relative;
+      overflow: hidden; background-color: #882121;
       box-shadow: 1px 1px 5px #111;
     }
-
     div#spinner:before {
-      display: block;
-      position: absolute;
-      content: "";
-      width: 150%;
-      margin-left: -10px;
-      height: 10px;
-      background-color: #e85352;
+      display: block; position: absolute;
+      content: ""; width: 150%; margin-left: -10px;
+      height: 10px; background-color: #e85352;
       transform: rotate(-5deg);
       animation: loading 1s linear infinite;
     }
-
     @keyframes loading {
-      from {
-        top: -185%
-      }
-      to {
-        top: 225%
-      }
+      from { top: -185% }
+      to { top: 225% }
+    }
+    #copyright-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 99999;
+      background: linear-gradient(90deg, #111, #1a1a1a);
+      border-bottom: 2px solid #ff9900;
+      box-shadow: 0 0 16px #ff9900;
+      color: #fff;
+      font-family: 'Pixelify Sans', sans-serif;
+      font-size: 13px;
+      text-align: center;
+      padding: 12px 20px;
+      letter-spacing: 1px;
+      animation: fadeOut 0.6s ease 4.4s forwards;
+    }
+    #copyright-banner span {
+      color: #ff9900;
+      text-shadow: 0 0 8px #ff9900;
+    }
+    #copyright-timer { display: none; }
+    @keyframes fadeOut {
+      to { opacity: 0; pointer-events: none; transform: translateY(-100%); }
     }
   </style>
 
@@ -144,10 +119,7 @@
           }
           fetch(fileParts[i])
             .then(r => r.arrayBuffer())
-            .then(data => {
-              buffers.push(data);
-              fetchPart(i + 1);
-            })
+            .then(data => { buffers.push(data); fetchPart(i + 1); })
             .catch(reject);
         }
         fetchPart(0);
@@ -156,9 +128,7 @@
 
     function getParts(file, start, end) {
       let arr = [];
-      for (let i = start; i <= end; i++) {
-        arr.push(file + ".part" + i);
-      }
+      for (let i = start; i <= end; i++) { arr.push(file + ".part" + i); }
       return arr;
     }
 
@@ -175,9 +145,8 @@
     function UnityProgress(gameInstance, progress) {
       var container = document.getElementById("gameContainer");
       if (container) document.body.style.background = container.style.background;
-
       if (!gameInstance.Module) {
-         return;
+        return;
       } else if (progress === "complete") {
         document.getElementById("loadingBox").style.display = "none";
         document.getElementById("icon").style.display = "none";
@@ -189,7 +158,7 @@
         document.getElementById("bgBar").style.display = "none";
         document.getElementById("progressBar").style.display = "none";
       } else if (progress > 0) {
-        document.getElementById("progressBar").style.width = 300 * progress + "px"
+        document.getElementById("progressBar").style.width = 300 * progress + "px";
         document.getElementById("loadingInfo").innerHTML = Math.round(progress * 100) + "%";
         document.getElementById("spinner").style.display = "none";
         document.getElementById("bgBar").style.display = "block";
@@ -201,10 +170,7 @@
       var originalOpen = XMLHttpRequest.prototype.open;
       XMLHttpRequest.prototype.open = function(method, url, ...args) {
         for (let key in window.mergedBlobUrls) {
-          if (url.includes(key)) {
-            url = window.mergedBlobUrls[key];
-            break;
-          }
+          if (url.includes(key)) { url = window.mergedBlobUrls[key]; break; }
         }
         return originalOpen.call(this, method, url, ...args);
       };
@@ -219,9 +185,9 @@
             mergeFiles(getParts("https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets/truck/Build/indian_truck_gd_2_0_1.wasm.code.unityweb", 1, 1)),
             mergeFiles(getParts("https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets/truck/Build/indian_truck_gd_2_0_1.wasm.framework.unityweb", 1, 1))
           ]).then(([dataUrl, wasmCodeUrl, wasmFrameworkUrl]) => {
-            window.mergedBlobUrls["https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets/truck/indian_truck_gd_2_0_1.data.unityweb"] = dataUrl;
-            window.mergedBlobUrls["https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets/truck/indian_truck_gd_2_0_1.wasm.code.unityweb"] = wasmCodeUrl;
-            window.mergedBlobUrls["https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets/truck/indian_truck_gd_2_0_1.wasm.framework.unityweb"] = wasmFrameworkUrl;
+            window.mergedBlobUrls["indian_truck_gd_2_0_1.data.unityweb"] = dataUrl;
+            window.mergedBlobUrls["indian_truck_gd_2_0_1.wasm.code.unityweb"] = wasmCodeUrl;
+            window.mergedBlobUrls["indian_truck_gd_2_0_1.wasm.framework.unityweb"] = wasmFrameworkUrl;
 
             config.dataUrl = "https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets/truck/Build/indian_truck_gd_2_0_1.data.unityweb";
             config.wasmCodeUrl = "https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets/truck/Build/indian_truck_gd_2_0_1.wasm.code.unityweb";
@@ -245,14 +211,35 @@
         .catch(err => {
           console.error("Unity load failed:", err);
           var loadingInfo = document.getElementById("loadingInfo");
-          if (loadingInfo) {
-            loadingInfo.innerHTML = "wtf did you do check console bruv";
-          }
+          if (loadingInfo) { loadingInfo.innerHTML = "wtf did you do check console bruv"; }
         });
     });
   </script>
 </head>
 <body style="width:100%; height:100%; margin:0; overflow:hidden">
+
+  <!-- Copyright Banner -->
+  <div id="copyright-banner">
+    I own <span>THESE GAME ASSETS</span> — If you steal from here, you will receive a <span>copyright strike!</span> &nbsp;—&nbsp; <span>UNBL0CKEDZ0NE</span>
+    <span id="copyright-timer">5</span>
+  </div>
+
+  <script>
+    var count = 5;
+    var timerEl = document.getElementById("copyright-timer");
+    var bannerEl = document.getElementById("copyright-banner");
+    var interval = setInterval(function() {
+      count--;
+      if (timerEl) timerEl.innerText = count;
+      if (count <= 0) {
+        clearInterval(interval);
+        setTimeout(function() {
+          if (bannerEl) bannerEl.remove();
+        }, 600);
+      }
+    }, 1000);
+  </script>
+
   <div id="webgl-content" style="width:100%; height: 100%">
     <div id="gameContainer" style="width: 100%; height: 100%"></div>
   </div>
@@ -266,3 +253,11 @@
   <p id="loadingInfo"></p>
 </body>
 </html>
+<!-- 
+Play a G4mes Website with stuff for every blocker! - 🎮 UNBL0CKEDZ0NE 💻.
+Our G4mes Doc with 2K G4mes 🎮! - https://docs.google.com/document/d/1JBhyNwurO02JYGBzx0p58B9e74qcphEKN8bI-i2dCcc/preview
+Discord with Links 👾! - https://discord.gg/v66D3fn4kD
+Our Tiktok 🔗 - https://www.tiktok.com/@unbl0ckedz0ne
+Our Youtube 🔗 - https://www.youtube.com/@unblockedzonegames
+Note Last Updated 🔄️ - March 21 2026
+-->
