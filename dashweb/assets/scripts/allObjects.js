@@ -72922,76 +72922,66 @@ return {
   35: {
     type: "pad",
     frame: "bump_01_001.png",
-    gridW: 1,
-    gridH: 1
+        "gridH": 0.13333334028720856,
+        "gridW": 0.8333333134651184,
   },
   
   67: {
     type: "pad",
     frame: "gravbump_01_001.png",
-    gridW: 1,
-    gridH: 1
+        "gridH": 0.20000000298023224,
+        "gridW": 0.8333333134651184,
   },
   140: {
     type: "pad",
     frame: "bump_03_001.png",
-    gridW: 1,
-    gridH: 1
+        "gridH": 0.1666666716337204,
+        "gridW": 0.8333333134651184,
   },
   1332: {
     type: "pad",
     frame: "bump_02_001.png",
-    gridW: 1,
-    gridH: 1
+        "gridH": 0.23333333432674408,
+        "gridW": 0.9666666388511658,
   },
   36: {
     type: "ring",
     frame: "ring_01_001.png",
-    gridW: 1,
-    gridH: 1
+    gridW: 1.2,
+    gridH: 1.2
   },
   84: {
     type: "ring",
     frame: "gravring_01_001.png",
-    gridW: 1,
-    gridH: 1
+    gridW: 1.2,
+    gridH: 1.2
   },
   141: {
     type: "ring",
     frame: "ring_03_001.png",
-    gridW: 1,
-    gridH: 1
+    gridW: 1.2,
+    gridH: 1.2
   },
-  1022: {
-    type: "ring",
-    frame: "gravJumpRing_01_001.png",
-    gridW: 1,
-    gridH: 1,
-  },
+
   1330: {
     type: "ring",
     frame: "dropRing_01_001.png",
-    gridW: 1,
-    gridH: 1
+    gridW: 1.2,
+    gridH: 1.2
   },
   1333: {
     type: "ring",
     frame: "ring_02_001.png",
-    gridW: 1,
-    gridH: 1
+    gridW: 1.2,
+    gridH: 1.2
   },
   1704: {
     type: "ring",
     frame: "dashRing_01_001.png",
-    gridW: 1,
-    gridH: 1
+    gridW: 1.2,
+    gridH: 1.2
   },
-  1022: {
-    type: "ring",
-    frame: "gravring_01_001.png",
-    gridW: 1,
-    gridH: 1
-  },
+
   1594: {
     type: "ring",
     frame: "ring_custom_01_001.png",
@@ -73001,8 +72991,8 @@ return {
   1751: {
     type: "ring",
     frame: "dashRing_01_001.png",
-    gridW: 1,
-    gridH: 1
+    gridW: 1.2,
+    gridH: 1.2
   },
   62: {
     type: "solid",
@@ -74076,32 +74066,123 @@ return {
       "type": "deco",
       "z": -7
   },
-   668: {
-      "black": true,
-      "can_color": true,
-      "color_channel": "black",
-      "default_base_color_channel": 1004,
-      "frame": "d_pixelArt01_001_001.png",
-      "glow_frame": "d_pixelArt01_001_glow_001.png",
-      "gridH": 0.5,
-      "gridW": 1.0,
-      "spritesheet": "GJ_GameSheet-uhd",
-      "type": "deco",
-      "z": -7
-  },
-  669: {
-      "black": true,
-      "can_color": true,
-      "color_channel": "black",
-      "default_base_color_channel": 1004,
-      "frame": "d_pixelArt01_002_001.png",
-      "glow_frame": "d_pixelArt01_002_glow_001.png",
-      "gridH": 1.0,
-      "gridW": 1.0,
-      "spritesheet": "GJ_GameSheet-uhd",
-      "type": "deco",
-      "z": -7
-  },
+   660: {
+        "can_color": false,
+        "default_base_color_channel": 0,
+        "frame": "portal_13_front_001.png",
+        "glow_frame": "portal_13_front_glow_001.png",
+        "gridH": 2.866666555404663,
+        "gridW": 1.1333333253860474,
+        "sub": "wave",
+        "spritesheet": "GJ_GameSheet02-uhd",
+        "type": "portal",
+        "z": 10
+    },
+    661: {
+        "can_color": true,
+        "default_base_color_channel": 1004,
+        "frame": "blockOutline_10_001.png",
+        "glow_frame": "blockOutline_10_glow_001.png",
+        "gridH": 0.5,
+        "gridW": 0.5,
+        "spritesheet": "GJ_GameSheet-uhd",
+        "type": "solid",
+        "z": 3
+    },
+    662: {
+        "can_color": true,
+        "default_base_color_channel": 1004,
+        "frame": "blockOutline_11_001.png",
+        "glow_frame": "blockOutline_11_glow_001.png",
+        "gridH": 0.5,
+        "gridW": 1.0,
+        "spritesheet": "GJ_GameSheet-uhd",
+        "type": "solid",
+        "z": 3
+    },
+    663: {
+        "can_color": true,
+        "default_base_color_channel": 1004,
+        "frame": "blockOutline_12_001.png",
+        "glow_frame": "blockOutline_12_glow_001.png",
+        "gridH": 0.5,
+        "gridW": 1.0,
+        "spritesheet": "GJ_GameSheet-uhd",
+        "type": "solid",
+        "z": 3
+    },
+    664: {
+        "can_color": true,
+        "default_base_color_channel": 1004,
+        "frame": "blockOutline_13_001.png",
+        "glow_frame": "blockOutline_13_glow_001.png",
+        "gridH": 0.5,
+        "gridW": 1.0,
+        "spritesheet": "GJ_GameSheet-uhd",
+        "type": "solid",
+        "z": 3
+    },
+    665: {
+        "can_color": true,
+        "default_base_color_channel": 1004,
+        "frame": "blockOutline_14_001.png",
+        "glow_frame": "blockOutline_14_glow_001.png",
+        "gridH": 1.0,
+        "gridW": 1.0,
+        "spritesheet": "GJ_GameSheet-uhd",
+        "type": "deco",
+        "z": 3
+    },
+    666: {
+        "can_color": true,
+        "default_base_color_channel": 1004,
+        "frame": "blockOutline_15_001.png",
+        "glow_frame": "blockOutline_15_glow_001.png",
+        "gridH": 1.0,
+        "gridW": 2.0,
+        "spritesheet": "GJ_GameSheet-uhd",
+        "type": "deco",
+        "z": 3
+    },
+    667: {
+        "black": true,
+        "can_color": true,
+        "color_channel": "black",
+        "default_base_color_channel": 1004,
+        "frame": "pit_07_001.png",
+        "glow_frame": "pit_07_glow_001.png",
+        "gridH": 0.5,
+        "gridW": 1.0,
+        "spritesheet": "GJ_GameSheet-uhd",
+        "type": "hazard",
+        "z": 1
+    },
+    668: {
+        "black": true,
+        "can_color": true,
+        "color_channel": "black",
+        "default_base_color_channel": 1004,
+        "frame": "d_pixelArt01_001_001.png",
+        "glow_frame": "d_pixelArt01_001_glow_001.png",
+        "gridH": 0.5,
+        "gridW": 1.0,
+        "spritesheet": "GJ_GameSheet-uhd",
+        "type": "deco",
+        "z": -7
+    },
+    669: {
+        "black": true,
+        "can_color": true,
+        "color_channel": "black",
+        "default_base_color_channel": 1004,
+        "frame": "d_pixelArt01_002_001.png",
+        "glow_frame": "d_pixelArt01_002_glow_001.png",
+        "gridH": 1.0,
+        "gridW": 1.0,
+        "spritesheet": "GJ_GameSheet-uhd",
+        "type": "deco",
+        "z": -7
+    },
   659: {
       "can_color": true,
       "default_base_color_channel": 1004,
@@ -75358,6 +75439,184 @@ return {
         "spritesheet": "GJ_GameSheet-uhd",
         "type": "solid",
         "z": 2
+    },
+     990: {
+        "can_color": true,
+        "default_base_color_channel": 1,
+        "frame": "pit_07_3_shine_001.png",
+        "glow_frame": "pit_07_3_shine_glow_001.png",
+        "gridH": 0.7666666507720947,
+        "gridW": 0.7666666507720947,
+        "spritesheet": "GJ_GameSheet-uhd",
+        "type": "deco",
+        "z": 9
+    },
+    991: {
+        "black": true,
+        "can_color": true,
+        "color_channel": "black",
+        "default_base_color_channel": 1004,
+        "frame": "pit_07_4_001.png",
+        "glow_frame": "pit_07_4_glow_001.png",
+        "gridH": 0.2666666805744171,
+        "gridW": 0.2666666805744171,
+        "spritesheet": "GJ_GameSheet-uhd",
+        "type": "hazard",
+        "z": 1
+    },
+    992: {
+        "can_color": true,
+        "default_base_color_channel": 1,
+        "frame": "pit_07_4_shine_001.png",
+        "glow_frame": "pit_07_4_shine_glow_001.png",
+        "gridH": 0.3166666626930237,
+        "gridW": 0.3166666626930237,
+        "spritesheet": "GJ_GameSheet-uhd",
+        "type": "deco",
+        "z": 9
+    },
+    997: {
+        "can_color": true,
+        "children": [
+            {
+                "frame": "d_ringSeg_01_001.png",
+                "localDy": 0.0,
+                "tint": 65280,
+                "z": -1
+            },
+            {
+                "frame": "d_ringSeg_01_001.png",
+                "localDy": 0.0,
+                "tint": 65280,
+                "z": 1
+            },
+            {
+                "frame": "d_ringSeg_01_001.png",
+                "localDy": 0.0,
+                "tint": 65280,
+                "z": 1
+            },
+            {
+                "frame": "d_ringSeg_01_001.png",
+                "localDy": 0.0,
+                "tint": 65280,
+                "z": 1
+            }
+        ],
+        "default_base_color_channel": 1005,
+        "frame": "d_ringSeg_01_001.png",
+        "glow_frame": "d_ringSeg_01_glow_001.png",
+        "gridH": 1.6666666269302368,
+        "gridW": 1.6666666269302368,
+        "spritesheet": "GJ_GameSheet-uhd",
+        "type": "deco",
+        "z": 9
+    },
+    998: {
+        "can_color": true,
+        "children": [
+            {
+                "frame": "d_ringSeg_02_001.png",
+                "localDy": 0.0,
+                "tint": 65280,
+                "z": -1
+            },
+            {
+                "frame": "d_ringSeg_02_001.png",
+                "localDy": 0.0,
+                "tint": 65280,
+                "z": 1
+            },
+            {
+                "frame": "d_ringSeg_02_001.png",
+                "localDy": 0.0,
+                "tint": 65280,
+                "z": 1
+            },
+            {
+                "frame": "d_ringSeg_02_001.png",
+                "localDy": 0.0,
+                "tint": 65280,
+                "z": 1
+            }
+        ],
+        "default_base_color_channel": 1005,
+        "frame": "d_ringSeg_02_001.png",
+        "glow_frame": "d_ringSeg_02_glow_001.png",
+        "gridH": 1.2666666507720947,
+        "gridW": 1.2666666507720947,
+        "spritesheet": "GJ_GameSheet-uhd",
+        "type": "deco",
+        "z": 9
+    },
+    999: {
+        "can_color": true,
+        "children": [
+            {
+                "frame": "d_ringSeg_03_001.png",
+                "localDy": 0.0,
+                "tint": 65280,
+                "z": -1
+            },
+            {
+                "frame": "d_ringSeg_03_001.png",
+                "localDy": 0.0,
+                "tint": 65280,
+                "z": 1
+            },
+            {
+                "frame": "d_ringSeg_03_001.png",
+                "localDy": 0.0,
+                "tint": 65280,
+                "z": 1
+            },
+            {
+                "frame": "d_ringSeg_03_001.png",
+                "localDy": 0.0,
+                "tint": 65280,
+                "z": 1
+            }
+        ],
+        "default_base_color_channel": 1005,
+        "frame": "d_ringSeg_03_001.png",
+        "glow_frame": "d_ringSeg_03_glow_001.png",
+        "gridH": 0.8500000238418579,
+        "gridW": 0.8666666746139526,
+        "spritesheet": "GJ_GameSheet-uhd",
+        "type": "deco",
+        "z": 9
+    },
+     1022: {
+        "can_color": false,
+        "children": [
+            {
+                "frame": "gravring_01_001.png",
+                "localDy": 0.0,
+                "tint": 65280,
+                "z": -1
+            }
+        ],
+        "default_base_color_channel": 0,
+        "frame": "gravring_01_001.png",
+        "glow_frame": "gravring_01_glow_001.png",
+        "gridH": 1.0,
+        "gridW": 1.0,
+        "spritesheet": "GJ_GameSheet-uhd",
+        "type": "ring",
+        "z": 12
+    },
+    989: {
+        "black": true,
+        "can_color": true,
+        "color_channel": "black",
+        "default_base_color_channel": 1004,
+        "frame": "pit_07_3_001.png",
+        "glow_frame": "pit_07_3_glow_001.png",
+        "gridH": 1.0,
+        "gridW": 1.0,
+        "spritesheet": "GJ_GameSheet-uhd",
+        "type": "hazard",
+        "z": 1
     },
 };
 }

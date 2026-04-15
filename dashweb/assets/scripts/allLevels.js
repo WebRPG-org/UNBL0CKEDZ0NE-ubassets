@@ -31,7 +31,7 @@ window.allLevels = [
     ],
     [
         "cant_let_go",
-	    "Can't Let Go",
+	    "Cant Let Go",
 	    "level_6",
 	    ["RobTop", "DJVI"] 
     ],
