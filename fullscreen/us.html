@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@latest/us/style.css">
+  <script type="module" src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@latest/us/scripts/ag_c3.js"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@latest/us/scripts/project/scriptsInEvents.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    window.addEventListener("keydown", function(e) {
+      if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
+        e.preventDefault();
+      }
+    }, false);
+  </script>
+
+  <noscript>
+    <div id="notSupportedWrap">
+      <h2 id="notSupportedTitle">This content requires JavaScript</h2>
+      <p class="notSupportedMessage">JavaScript appears to be disabled.</p>
+    </div>
+  </noscript>
+
+  <script src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@latest/us/scripts/supportcheck.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@latest/us/scripts/offlineclient.js" type="module"></script>
+  <script src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@latest/us/main.js" type="module"></script>
+  <script src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@latest/us/scripts/register-sw.js" type="module"></script>
+
+  <canvas width="1067" height="600"></canvas>
+
+  <script>
+    function centerCanvas() {
+      const canvas = document.querySelector('canvas');
+      if (!canvas) return;
+
+      const scaleX = window.innerWidth / 1067;
+      const scaleY = window.innerHeight / 600;
+      const scale = Math.min(scaleX, scaleY);
+
+      const scaledW = 1067 * scale;
+      const scaledH = 600 * scale;
+      const left = (window.innerWidth - scaledW) / 2;
+      const top = (window.innerHeight - scaledH) / 2;
+
+      canvas.style.setProperty('width', scaledW + 'px', 'important');
+      canvas.style.setProperty('height', scaledH + 'px', 'important');
+      canvas.style.setProperty('margin-left', left + 'px', 'important');
+      canvas.style.setProperty('margin-top', top + 'px', 'important');
+      canvas.style.setProperty('position', 'absolute', 'important');
+      canvas.style.setProperty('left', '0', 'important');
+      canvas.style.setProperty('top', '0', 'important');
+    }
+
+    centerCanvas();
+    window.addEventListener('resize', centerCanvas);
+
+    // Watch for the game JS changing canvas styles and re-center
+    const observer = new MutationObserver(() => {
+      centerCanvas();
+    });
+
+    function startObserver() {
+      const canvas = document.querySelector('canvas');
+      if (canvas) {
+        observer.observe(canvas, { attributes: true, attributeFilter: ['style'] });
+      } else {
+        setTimeout(startObserver, 100);
+      }
+    }
+
+    startObserver();
+  </script>
+</body>
+</html>
+<!-- 
+Play a G4mes Website with stuff for every blocker! - 🎮 UNBL0CKEDZ0NE 💻.
+Our G4mes Doc with 2K G4mes 🎮! - https://docs.google.com/document/d/1JBhyNwurO02JYGBzx0p58B9e74qcphEKN8bI-i2dCcc/preview
+Discord with Links 👾! - https://discord.gg/v66D3fn4kD
+Our Tiktok 🔗 - https://www.tiktok.com/@unbl0ckedz0ne
+Our Youtube 🔗 - https://www.youtube.com/@unblockedzonegames
+Note Last Updated 🔄️ - March 21 2026
+-->
