@@ -1,140 +1,192 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Fullscreen Button</title>
-  <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap" rel="stylesheet">
-  <style>
-    #copyright-banner {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 99999;
-      background: linear-gradient(90deg, #111, #1a1a1a);
-      border-bottom: 2px solid #ff9900;
-      box-shadow: 0 0 16px #ff9900;
-      color: #fff;
-      font-family: 'Pixelify Sans', sans-serif;
-      font-size: 13px;
-      text-align: center;
-      padding: 12px 20px;
-      letter-spacing: 1px;
-      animation: fadeOut 0.6s ease 4.4s forwards;
-    }
-    #copyright-banner span {
-      color: #ff9900;
-      text-shadow: 0 0 8px #ff9900;
-    }
-    #copyright-timer { display: none; }
-    @keyframes fadeOut {
-      to { opacity: 0; pointer-events: none; transform: translateY(-100%); }
-    }
-
-    #fullscreenButton {
-      position: fixed;
-      bottom: 12px;
-      right: 12px;
-      background-color: #111;
-      color: #fff;
-      border: 2px solid #ff9900;
-      font-size: 12px;
-      font-family: 'Audiowide', sans-serif;
-      padding: 8px 14px;
-      cursor: pointer;
-      border-radius: 8px;
-      letter-spacing: 1px;
-      box-shadow: 0 0 10px #ff9900;
-      transition: all 0.3s ease;
-      z-index: 9999;
-    }
-    .fireInside {
-      background-image: linear-gradient(270deg, red, orange, yellow);
-      background-size: 300% 300%;
-      animation: fireInside 3s linear infinite;
-      color: #fff;
-      text-shadow: 0 0 8px rgba(255,255,255,0.7);
-      box-shadow: inset 0 0 10px rgba(255,165,0,0.4), 0 0 14px #ff9900;
-    }
-    @keyframes fireInside {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Copyright Banner -->
-  <div id="copyright-banner">
-    ⚠️ I own <span>this game repo</span> — If you take from here <span>please ask me!</span> &nbsp;—&nbsp; <span>UNBL0CKEDZ0NE ⚠️</span>
-    <span id="copyright-timer">5</span>
-  </div>
-
-  <script>
-    var count = 5;
-    var timerEl = document.getElementById("copyright-timer");
-    var bannerEl = document.getElementById("copyright-banner");
-    var interval = setInterval(function() {
-      count--;
-      if (timerEl) timerEl.innerText = count;
-      if (count <= 0) {
-        clearInterval(interval);
-        setTimeout(function() {
-          if (bannerEl) bannerEl.remove();
-        }, 600);
+<html lang="en-us">
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <base href="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/buildnow/">
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap" rel="stylesheet">
+    <style>
+      #copyright-banner {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        z-index: 99999;
+        background: linear-gradient(90deg, #111, #1a1a1a);
+        border-bottom: 2px solid #ff9900;
+        box-shadow: 0 0 16px #ff9900;
+        color: #fff;
+        font-family: 'Pixelify Sans', sans-serif;
+        font-size: 13px;
+        text-align: center;
+        padding: 12px 20px;
+        letter-spacing: 1px;
+        animation: fadeOut 0.6s ease 4.4s forwards;
       }
-    }, 1000);
-  </script>
+      #copyright-banner span {
+        color: #ff9900;
+        text-shadow: 0 0 8px #ff9900;
+      }
+      #copyright-timer {
+        display: none;
+      }
+      @keyframes fadeOut {
+        to { opacity: 0; pointer-events: none; transform: translateY(-100%); }
+      }
+    </style>
+  </head>
+  <body style="margin:0;padding:0" class="noselect">
 
-  <button
-    id="fullscreenButton"
-    onclick="openPage()"
-    onmouseover="this.classList.add('fireInside')"
-    onmouseout="this.classList.remove('fireInside')">
-    ⛶ Fullscreen
-  </button>
+    <!-- Copyright Banner -->
+    <div id="copyright-banner">
+      ⚠️ I own <span>THESE GAME ASSETS!</span> If you steal from here, you will receive a <span>copyright strike!</span> &nbsp;—&nbsp; <span>UNBL0CKEDZ0NE ⚠️</span>
+      <span id="copyright-timer">5</span>
+    </div>
 
-  <script>
-    var url = "https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/buildnow/index.html";
-
-    var ORIGINAL_TEXT = "⛶ Fullscreen";
-    var ERROR_TEXT    = "Not Found!";
-    var POPUP_TEXT    = "Allow Popups!";
-
-    function setTemp(text, ms) {
-      var btn = document.getElementById("fullscreenButton");
-      btn.innerText = text;
-      btn.classList.add("fireInside");
-      setTimeout(function() {
-        btn.innerText = ORIGINAL_TEXT;
-        btn.classList.remove("fireInside");
-      }, ms || 3500);
-    }
-
-    function openPage() {
-      fetch(url + "?t=" + Date.now())
-        .then(function(r) {
-          if (!r.ok) throw new Error("not found");
-          return r.text();
-        })
-        .then(function(html) {
-          var win = window.open("about:blank", "_blank");
-          if (!win) { setTemp(POPUP_TEXT, 4500); return; }
-          win.document.open();
-          win.document.write(html);
-          win.document.close();
-          document.getElementById("fullscreenButton").innerText = "Opened!";
+    <script>
+      // Countdown timer on banner
+      var count = 5;
+      var timerEl = document.getElementById("copyright-timer");
+      var bannerEl = document.getElementById("copyright-banner");
+      var interval = setInterval(function() {
+        count--;
+        if (timerEl) timerEl.innerText = count;
+        if (count <= 0) {
+          clearInterval(interval);
           setTimeout(function() {
-            document.getElementById("fullscreenButton").innerText = ORIGINAL_TEXT;
-          }, 3000);
-        })
-        .catch(function() {
-          setTemp(ERROR_TEXT);
-        });
-    }
-  </script>
+            if (bannerEl) bannerEl.remove();
+          }, 600);
+        }
+      }, 1000);
+    </script>
 
-</body>
+    <div id="loading-text" style="color: black; font-size: 48px; font-family: cursive; text-align: center; margin-top: 20px;">LOADING...</div>
+    <canvas id="unity-canvas"
+      style="position:fixed;top:0;left:0;width:100%;height:100%;outline:none"></canvas>
+
+    <script>
+    const SPLIT_MAP = {"7db022abd161455e3cc5f207e75d294b.wasm": null, "ab8dd356a41a2943639294657a0990f8.data": null};
+    </script>
+
+    <script>
+    async function mergeParts(baseUrl) {
+      const parts = [];
+      for (let i = 1; i <= 99; i++) {
+        const testUrl = baseUrl + ".part" + i;
+        try {
+          const head = await fetch(testUrl, { method: "HEAD" });
+          if (!head.ok) break;
+          parts.push(testUrl);
+        } catch { break; }
+      }
+      if (parts.length === 0) return baseUrl;
+
+      const buffers = await Promise.all(parts.map(async (u) => {
+        const r = await fetch(u);
+        if (!r.ok) throw new Error("Failed part " + u);
+        return new Uint8Array(await r.arrayBuffer());
+      }));
+
+      const total = buffers.reduce((a, b) => a + b.length, 0);
+      const merged = new Uint8Array(total);
+      let offset = 0;
+      for (const b of buffers) { merged.set(b, offset); offset += b.length; }
+
+      return URL.createObjectURL(new Blob([merged]));
+    }
+
+    async function preMergeAll() {
+      const map = {};
+      const files = Object.entries(SPLIT_MAP);
+      const total = files.length;
+      let done = 0;
+
+      const loadingText = document.getElementById("loading-text");
+
+      for (const [file, _] of files) {
+        const merged = await mergeParts("Build/" + file);
+        map[file] = merged;
+        done++;
+        const percent = Math.floor((done / total) * 100);
+        loadingText.innerText = `LOADING... ${percent}%`;
+        console.log("Premerged:", file, "→", merged);
+      }
+
+      loadingText.style.display = "none";
+
+      return map;
+    }
+
+    (async () => {
+      const mergedMap = await preMergeAll();
+      window.SPLIT_MAP = mergedMap;
+      const origFetch = window.fetch;
+      window.fetch = async function(resource, options) {
+        if (typeof resource === "string") {
+          const key = resource.split("/").pop();
+          if (mergedMap[key]) {
+            console.log("Redirect fetch:", key);
+            return origFetch(mergedMap[key], options);
+          }
+          if (resource.includes("StreamingAssets")) {
+            return origFetch((document.querySelector('base').href !== null ? document.querySelector('base').href+"/" : "") + "StreamingAssets/"+resource.split("/StreamingAssets/")[1])
+          }
+        }
+        return origFetch(resource, options);
+      };
+
+      const OrigXHR = window.XMLHttpRequest;
+      window.XMLHttpRequest = function() {
+        const xhr = new OrigXHR();
+        const origOpen = xhr.open;
+        xhr.open = function(method, url, ...rest) {
+          const key = url.split("/").pop();
+          if (mergedMap[key]) {
+            console.log("Redirect XHR:", key);
+            origOpen.call(xhr, method, mergedMap[key], ...rest);
+          } else {
+            origOpen.call(xhr, method, url, ...rest);
+          }
+        };
+        return xhr;
+      };
+
+      const canvas = document.querySelector("#unity-canvas");
+      const loaderUrl = "Build/7a2dbded24d57e056180125b1583e7c4.loader.js";
+      const config = {
+        dataUrl: "https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/buildnow/Build/ab8dd356a41a2943639294657a0990f8.data",
+        frameworkUrl: "https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/buildnow/Build/91a2bfcec140bc524100478b99a4f6d7.framework.js",
+        codeUrl: "https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/buildnow/Build/7db022abd161455e3cc5f207e75d294b.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "BuildNow GG",
+        productName: "BuildNow GG",
+        productVersion: "1.0.0"
+      };
+
+      const script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {}).then((unityInstance) => {
+          window.gameInstance = unityInstance;
+        }).catch((message) => alert(message));
+      };
+      document.body.appendChild(script);
+    })();
+    </script>
+
+    <script>
+    function resizeCanvas() {
+      const canvas = document.getElementById("unity-canvas");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      canvas.style.width = window.innerWidth + "px";
+      canvas.style.height = window.innerHeight + "px";
+    }
+    window.addEventListener("load", resizeCanvas);
+    window.addEventListener("resize", resizeCanvas);
+    </script>
+  </body>
 </html>
 <!-- 
 Play a G4mes Website with stuff for every blocker! - 🎮 UNBL0CKEDZ0NE 💻.
