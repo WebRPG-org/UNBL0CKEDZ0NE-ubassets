@@ -1,0 +1,249 @@
+<html><head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>1v1.LOL RELOADED - Play Game Online</title>
+    <link rel="icon" href="/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;700&amp;display=swap" rel="stylesheet">
+    <style>
+      html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
+      .webgl-content { position: relative; width: 100%; height: 100%; }
+      #gameContainer { width: 100% !important; height: 100% !important; margin: 0 !important; }
+
+      #progress-wrap {
+        position: absolute; inset: 0; z-index: 10;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 28px;
+        background: radial-gradient(ellipse at 50% 35%, #1a0a00 0%, #0d0500 60%, #000 100%);
+        color: #fff;
+        font-family: 'Pixelify Sans', monospace;
+      }
+      #progress-wrap::before {
+        content: ''; position: absolute; inset: 0; pointer-events: none;
+        background: repeating-linear-gradient(
+          0deg, transparent, transparent 3px,
+          rgba(255, 100, 0, 0.03) 3px, rgba(255, 100, 0, 0.03) 4px
+        );
+      }
+      #progress-wrap::after {
+        content: ''; position: absolute; inset: 0; pointer-events: none;
+        background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(255, 80, 0, 0.08) 100%);
+      }
+      .loading-hero {
+        display: flex; flex-direction: column; align-items: center;
+        gap: 16px; position: relative; z-index: 1;
+      }
+      .loading-logo-img {
+        width: clamp(180px, 30vw, 380px); height: auto;
+        filter: drop-shadow(0 0 18px rgba(255,120,20,0.7)) drop-shadow(0 0 40px rgba(255,60,0,0.4));
+        animation: logoPulse 3s ease-in-out infinite;
+      }
+      @keyframes logoPulse {
+        0%, 100% { filter: drop-shadow(0 0 18px rgba(255,120,20,0.7)) drop-shadow(0 0 40px rgba(255,60,0,0.4)); }
+        50%       { filter: drop-shadow(0 0 28px rgba(255,160,40,0.9)) drop-shadow(0 0 60px rgba(255,80,0,0.6)); }
+      }
+      .loading-label {
+        font-family: 'Pixelify Sans', monospace;
+        font-size: clamp(11px, 1.4vw, 15px);
+        letter-spacing: 6px; color: #ff6a00;
+        text-transform: uppercase; opacity: 0.75;
+      }
+      .loading-bar-wrap {
+        display: flex; flex-direction: column; align-items: center;
+        gap: 10px; position: relative; z-index: 1;
+      }
+      .loading-bar-container {
+        width: min(380px, 72vw); height: 8px; border-radius: 4px;
+        background: rgba(255,100,0,0.1); border: 1px solid rgba(255,100,0,0.3);
+        overflow: hidden; position: relative;
+      }
+      .loading-bar-fill {
+        height: 100%; width: 0%;
+        background: linear-gradient(90deg, #ff4500, #ff8c00, #ffb347);
+        background-size: 200% 100%;
+        animation: barShimmer 1.8s linear infinite;
+        box-shadow: 0 0 14px rgba(255,120,0,0.8), 0 0 4px #fff;
+        border-radius: 4px; transition: width 0.2s ease-out;
+      }
+      @keyframes barShimmer {
+        from { background-position: 0% 0; }
+        to   { background-position: 200% 0; }
+      }
+      .loading-percent {
+        font-family: 'Pixelify Sans', monospace;
+        font-size: clamp(13px, 1.6vw, 17px); letter-spacing: 2px;
+        color: #ff8c00; text-shadow: 0 0 8px rgba(255,140,0,0.6);
+      }
+    </style>
+
+    <script>
+      // Stub out everything that might be missing or call external services
+      window.Bugsnag = {
+        notify: function() {}, leaveBreadcrumb: function() {},
+        startSession: function() {}, pauseSession: function() {},
+        resumeSession: function() {}, addOnError: function() {},
+        addMetadata: function() {}, clearMetadata: function() {},
+        getMetadata: function() {}, setUser: function() {},
+        getUser: function() { return {}; }
+      };
+
+      // Silence XHR to bugsnag and any other external analytics
+      (function() {
+        var _origOpen = XMLHttpRequest.prototype.open;
+        XMLHttpRequest.prototype.open = function(method, url) {
+          this._blocked = false;
+          if (typeof url === 'string' && (
+            url.indexOf('bugsnag') !== -1 ||
+            url.indexOf('sessions.') !== -1 ||
+            url.indexOf('analytics') !== -1 ||
+            url.indexOf('google-analytics') !== -1 ||
+            url.indexOf('doubleclick') !== -1
+          )) {
+            this._blocked = true;
+          }
+          // Always call original open to keep state machine intact
+          return _origOpen.apply(this, arguments);
+        };
+
+        var _origSend = XMLHttpRequest.prototype.send;
+        XMLHttpRequest.prototype.send = function() {
+          if (this._blocked) {
+            // Fake a successful response so callers don't hang
+            Object.defineProperty(this, 'readyState', { get: function() { return 4; }, configurable: true });
+            Object.defineProperty(this, 'status', { get: function() { return 200; }, configurable: true });
+            Object.defineProperty(this, 'responseText', { get: function() { return '{}'; }, configurable: true });
+            if (this.onreadystatechange) this.onreadystatechange();
+            if (this.onload) this.onload();
+            return;
+          }
+          return _origSend.apply(this, arguments);
+        };
+
+        // Also stub setRequestHeader so blocked requests don't error
+        var _origSetHeader = XMLHttpRequest.prototype.setRequestHeader;
+        XMLHttpRequest.prototype.setRequestHeader = function(header, value) {
+          if (this._blocked) return;
+          return _origSetHeader.apply(this, arguments);
+        };
+      })();
+
+      // Stub Firebase so missing firebase-config.js doesn't crash anything
+      function initializeFireBase() {}
+      function initRemoteConfig() {}
+      function sendConfig() {}
+
+      // Stub server-mock functions that Unity might call
+      window.firebase = window.firebase || {
+        auth: function() { return { onAuthStateChanged: function() {}, signInWithPopup: function() { return Promise.resolve(); } }; },
+        firestore: function() { return { collection: function() { return { doc: function() { return { get: function() { return Promise.resolve({ exists: false, data: function() { return {}; } }); }, set: function() { return Promise.resolve(); } }; } }; } }; },
+        remoteConfig: function() { return { fetchAndActivate: function() { return Promise.resolve(); }, getValue: function() { return { asString: function() { return ''; } }; } }; }
+      };
+    </script>
+
+    <script>
+      // Load server-mock if it exists, silently skip if not
+      (function() {
+        var s = document.createElement('script');
+        s.src = 'server-mock.js';
+        s.onerror = function() {};
+        document.head.appendChild(s);
+      })();
+    </script>
+    <script src="UnityLoader.js"></script>
+  </head>
+  <body>
+    <div class="webgl-content">
+      <div id="gameContainer" style="width: 100%; height: 100%; margin: auto;"></div>
+      <div id="progress-wrap">
+        <div class="loading-hero">
+          <img src="logo.png" alt="1v1.LOL Reloaded" class="loading-logo-img">
+          <div class="loading-label">Loading</div>
+        </div>
+        <div class="loading-bar-wrap">
+          <div class="loading-bar-container">
+            <div id="loading-bar-fill" class="loading-bar-fill"></div>
+          </div>
+          <div id="progress-status" class="loading-percent">0%</div>
+        </div>
+      </div>
+    </div>
+
+    <script src="firebase.js"></script>
+    <script src="login.js"></script>
+
+    <script>
+      try { initializeFireBase(); } catch(e) {}
+      try { initRemoteConfig(); } catch(e) {}
+
+      var gameInstance = UnityLoader.instantiate("gameContainer", "build.json", {
+        onProgress: function(instance, p) {
+          var pct = Math.round(p * 100);
+          var bar = document.getElementById('loading-bar-fill');
+          var s = document.getElementById('progress-status');
+          if (bar) bar.style.width = pct + '%';
+          if (s) s.textContent = pct + '%';
+        },
+        Module: { onRuntimeInitialized: function() {
+          var el = document.getElementById('progress-wrap');
+          if (el) {
+            el.style.transition = 'opacity .35s ease';
+            el.style.opacity = '0';
+            setTimeout(function() { el.style.display = 'none'; }, 380);
+          }
+        }}
+      });
+
+      window.unityInstance = gameInstance;
+
+      var _isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      window.updateFullscreen = function() {
+        if (_isIOS) return;
+        try {
+          if (document.fullscreenElement) {
+            document.exitFullscreen().catch(function(){});
+          } else if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen().catch(function(){});
+          }
+        } catch(e) {}
+      };
+
+      function showAds() {}
+      function requestNewAd() { unityAdFinishedCallback(); }
+      function unityAdFinishedCallback() {
+        try {
+          if (gameInstance) gameInstance.SendMessage('MainMenuManagers', 'OnWebCallback');
+        } catch(e) {}
+      }
+      function onUnityReady() {
+        try { sendConfig(); } catch(e) {}
+      }
+
+      // Fullscreen toggle button
+      (function() {
+        if (_isIOS) return;
+        var btn = document.createElement('button');
+        btn.setAttribute('aria-label', 'Toggle fullscreen');
+        btn.title = 'Toggle fullscreen';
+        btn.style.cssText = 'position:fixed;top:10px;right:10px;width:36px;height:36px;padding:0;z-index:99999;background:rgba(0,0,0,0.6);border:1px solid rgba(255,140,0,0.3);border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0.6;transition:opacity 0.2s,transform 0.2s;';
+        btn.onmouseenter = function() { btn.style.opacity = '1'; btn.style.transform = 'scale(1.05)'; };
+        btn.onmouseleave = function() { btn.style.opacity = '0.6'; btn.style.transform = 'scale(1)'; };
+        var iconEnter = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff8c00" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9V5a2 2 0 0 1 2-2h4M21 9V5a2 2 0 0 0-2-2h-4M3 15v4a2 2 0 0 0 2 2h4M21 15v4a2 2 0 0 1-2 2h-4"/></svg>';
+        var iconExit = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff8c00" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v4a1 1 0 0 1-1 1H3M16 3v4a1 1 0 0 0 1 1h4M8 21v-4a1 1 0 0 0-1-1H3M16 21v-4a1 1 0 0 1 1-1h4"/></svg>';
+        var updateIcon = function() { btn.innerHTML = document.fullscreenElement ? iconExit : iconEnter; };
+        btn.onclick = function(e) {
+          e.preventDefault();
+          try {
+            if (document.fullscreenElement) {
+              document.exitFullscreen().catch(function(){});
+            } else if (document.documentElement.requestFullscreen) {
+              document.documentElement.requestFullscreen().catch(function(){});
+            }
+          } catch(e) {}
+        };
+        document.addEventListener('fullscreenchange', updateIcon);
+        updateIcon();
+        document.body.appendChild(btn);
+      })();
+    </script>
+</body></html>
