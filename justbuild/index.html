@@ -4,52 +4,60 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Just Build - UNBL0CKEDZ0NE</title>
-    <link rel="shortcut icon" href=https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@latest/justbuild/favicon.ico">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@latest/justbuild/style.css">
+    <!-- Fixed the missing quote below -->
+    <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@latest/justbuild/favicon.ico">
+    <link rel="stylesheet" href="https://cdn. athletics.js/gh/UNBL0CKEDZ0NE/ubassets@latest/justbuild/style.css">
+    
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@latest/justbuild/adinLoader.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@latest/justbuild/UnityLoader.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@latest/justbuild/UnityProgress.js"></script>
-    <script>
-      // Removed the fixed width/height from the instantiator to let CSS handle it
-      var gameInstance = UnityLoader.instantiate("gameContainer", "build.json", {
-        onProgress: UnityProgress,
-        Module: {
-          onRuntimeInitialized: function() {
-            UnityProgress(gameInstance, "complete")
-          }
-        }
-      });
-    </script>
   </head>
   <body>
-    <!-- Container is now strictly for the game -->
     <div id="gameContainer"></div>
 
-    <!-- Loader stays as an overlay -->
     <div id="loader">
       <div class="spinner"></div>
-      <div class="progress">
-        <div class="full"></div>
-      </div>
+      <div class="progress"><div class="full"></div></div>
     </div>
 
-    <!-- Scripting remains the same, but ads are hidden by default -->
-    <script>
-      function lockChangeAlert() {
-        if (!document.pointerLockElement)
-          gameInstance.SendMessage("Pause Canvas", "PauseGame");
-      }
+<script>
+  // 1. CREATE THE STUBS IMMEDIATELY
+  // This ensures that even if the ad file is missing, the game won't crash.
+  window.showAds = function() {
+    console.log("Ad requested but script is missing. Skipping safely.");
+  };
+  window.hideAds = function() {
+    console.log("Ad hide requested. Skipping safely.");
+  };
+  window.getAdinDomain = ""; // Define the variable the ad loader expects
 
-      // Ad functions kept for logic, but elements removed from view
-      function showAds() {}
-      function hideAds() {}
-
-      if (typeof getAdinDomain !== 'undefined') {
-        const bodyTag = document.getElementsByTagName('body')[0];
-        let addAdinPreroll = document.createElement('script');
-        addAdinPreroll.src = getAdinDomain;
-        bodyTag.appendChild(addAdinPreroll);
+  // 2. LOAD THE GAME
+  var jsonPath = "https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@latest/justbuild/build.json";
+  
+  var gameInstance = UnityLoader.instantiate("gameContainer", jsonPath, {
+    onProgress: UnityProgress,
+    Module: {
+      onRuntimeInitialized: function() {
+        UnityProgress(gameInstance, "complete");
       }
-    </script>
+    }
+  });
+
+  // 3. POINTER LOCK LOGIC
+  function lockChangeAlert() {
+    if (!document.pointerLockElement && typeof gameInstance !== 'undefined')
+      gameInstance.SendMessage("Pause Canvas", "PauseGame");
+  }
+  document.addEventListener('pointerlockchange', lockChangeAlert, false);
+</script>
   </body>
 </html>
+<!-- 
+Play a G4mes Website with stuff for every blocker! - 🎮 UNBL0CKEDZ0NE 💻.
+Our G4mes Doc with 2K G4mes 🎮! - https://docs.google.com/document/d/1JBhyNwurO02JYGBzx0p58B9e74qcphEKN8bI-i2dCcc/preview
+Discord with Links 👾! - https://discord.gg/v66D3fn4kD
+Our Tiktok 🔗 - https://www.tiktok.com/@unbl0ckedz0ne
+Our Youtube 🔗 - https://www.youtube.com/@unblockedzonegames
+Note Last Updated 🔄️ - March 21 2026
+-->
