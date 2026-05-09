@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Just Build - UNBL0CKEDZ0NE</title>
+    <link rel="shortcut icon" href=https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@latest/justbuild/favicon.ico">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@latest/justbuild/style.css">
+    <script src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@latest/justbuild/adinLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@latest/justbuild/UnityLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@latest/justbuild/UnityProgress.js"></script>
+    <script>
+      // Removed the fixed width/height from the instantiator to let CSS handle it
+      var gameInstance = UnityLoader.instantiate("gameContainer", "build.json", {
+        onProgress: UnityProgress,
+        Module: {
+          onRuntimeInitialized: function() {
+            UnityProgress(gameInstance, "complete")
+          }
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <!-- Container is now strictly for the game -->
+    <div id="gameContainer"></div>
+
+    <!-- Loader stays as an overlay -->
+    <div id="loader">
+      <div class="spinner"></div>
+      <div class="progress">
+        <div class="full"></div>
+      </div>
+    </div>
+
+    <!-- Scripting remains the same, but ads are hidden by default -->
+    <script>
+      function lockChangeAlert() {
+        if (!document.pointerLockElement)
+          gameInstance.SendMessage("Pause Canvas", "PauseGame");
+      }
+
+      // Ad functions kept for logic, but elements removed from view
+      function showAds() {}
+      function hideAds() {}
+
+      if (typeof getAdinDomain !== 'undefined') {
+        const bodyTag = document.getElementsByTagName('body')[0];
+        let addAdinPreroll = document.createElement('script');
+        addAdinPreroll.src = getAdinDomain;
+        bodyTag.appendChild(addAdinPreroll);
+      }
+    </script>
+  </body>
+</html>
