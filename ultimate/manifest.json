@@ -1,0 +1,14 @@
+{
+  "name": "Baldi's Basics The Ultra Decompile",
+  "start_url": "./index.html",
+  "icons": [
+    {
+      "src": "TemplateData/AppIcon.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    }
+  ],
+  "description": "Baldi's Basics The Ultra Decompile",
+  "orientation": "landscape",
+  "display": "fullscreen"
+}
