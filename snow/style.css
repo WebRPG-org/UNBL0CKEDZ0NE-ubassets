@@ -1,0 +1,59 @@
+/* style.css */
+
+/* 1. Ensure the page is truly fullscreen and remove scrollbars */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #231f20; /* Matches the dark theme background */
+}
+
+/* 2. Force the game container to fill the entire viewport */
+#gameContainer {
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* 3. Center and size your custom logo */
+.logo {
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    background-image: url('https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/UNBL0CKEDZ0NE%20in%20Text.png') !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 400px !important; 
+    height: 150px !important;
+    z-index: 10;
+}
+
+/* 4. Style the progress bar container */
+.progress {
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%, -50%);
+    width: 250px !important; /* Wider for a better look */
+    height: 10px !important; /* Thinner/sleeker bar */
+    background-color: rgba(255, 255, 255, 0.1); /* Subtle background for the empty part */
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+/* 5. Style the "Full" part of the loading bar */
+.progress .full {
+    background-color: #ffffff !important; /* Solid white for the progress */
+    height: 100%;
+}
+
+/* 6. Style the "Empty" part of the loading bar */
+.progress .empty {
+    display: none !important; /* Hiding the original empty div to use the container's background instead */
+}
