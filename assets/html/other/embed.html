@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML Embedder — UNBL0CKEDZ0NE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #060606;
+      --panel: #0e0e0e;
+      --border: #1e1e1e;
+      --accent: #ff9900;
+      --accent-dim: rgba(255,153,0,0.12);
+      --accent-glow: rgba(255,153,0,0.4);
+      --text: #e8e8e8;
+      --muted: #555;
+      --tab-bg: #111;
+      --header-h: 52px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Lexend', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* ── HEADER ── */
+    header {
+      height: var(--header-h);
+      background: var(--panel);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      flex-shrink: 0;
+    }
+
+    header h1 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      text-shadow: 0 0 18px var(--accent-glow);
+    }
+
+    /* ── MAIN CONTENT ── */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 20px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 36px 32px;
+      width: 100%;
+      max-width: 680px;
+      box-shadow: 0 0 40px rgba(255,153,0,0.06), 0 8px 32px rgba(0,0,0,0.6);
+    }
+
+    .card-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      text-shadow: 0 0 16px var(--accent-glow);
+      margin-bottom: 6px;
+    }
+
+    .card-subtitle {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 28px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    textarea#htmlInput {
+      width: 100%;
+      min-height: 240px;
+      background: #0a0a0a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      padding: 14px 16px;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      tab-size: 2;
+    }
+
+    textarea#htmlInput::placeholder {
+      color: #2a2a2a;
+    }
+
+    textarea#htmlInput:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      background: transparent;
+      border: 1.5px solid var(--border);
+      color: var(--text);
+      font-family: 'Lexend', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 20px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, box-shadow 0.2s, background 0.2s;
+      white-space: nowrap;
+      letter-spacing: 0.02em;
+    }
+
+    .btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+
+    .btn-primary {
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent);
+      color: #000;
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-8px);
+      background: #1a1a1a;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 10px 22px;
+      border-radius: 7px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 0 20px var(--accent-glow);
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s, transform 0.2s;
+      letter-spacing: 0.02em;
+    }
+
+    #toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      height: 26px;
+      background: var(--panel);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 16px;
+      flex-shrink: 0;
+    }
+
+    footer span {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.03em;
+    }
+
+    .sep { color: var(--border) !important; }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>⚡ HTML Embedder</h1>
+  </header>
+
+  <main>
+    <div class="card">
+      <div class="card-title">HTML Embedder</div>
+      <div class="card-subtitle">Paste &amp; open in a new window</div>
+
+      <label for="htmlInput">Your HTML Code</label>
+      <textarea id="htmlInput" placeholder="<!-- Paste your HTML here... -->" spellcheck="false"></textarea>
+
+      <div class="actions">
+        <button class="btn" onclick="clearInput()">Clear</button>
+        <button class="btn btn-primary" onclick="embedAndOpen()">▶ Embed &amp; Open</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span>HTML Embedder</span>
+    <span class="sep">|</span>
+    <span>made by UNBL0CKEDZ0NE</span>
+  </footer>
+
+  <div id="toast"></div>
+
+  <script>
+    function showToast(msg, isError = true) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.style.borderColor = isError ? '#f87171' : 'var(--accent)';
+      t.style.color = isError ? '#f87171' : 'var(--accent)';
+      t.style.boxShadow = isError ? '0 0 20px rgba(248,113,113,0.4)' : '0 0 20px var(--accent-glow)';
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    function embedAndOpen() {
+      const html = document.getElementById('htmlInput').value;
+      if (!html.trim()) {
+        showToast('⚠ Please enter some HTML code.', true);
+        return;
+      }
+      const win = window.open('', '_blank');
+      if (win) {
+        win.document.open();
+        win.document.write(html);
+        win.document.close();
+        win.focus();
+        showToast('✓ Opened in new window!', false);
+      } else {
+        showToast('✕ Pop-up blocked — please allow pop-ups.', true);
+      }
+    }
+
+    function clearInput() {
+      document.getElementById('htmlInput').value = '';
+      document.getElementById('htmlInput').focus();
+    }
+
+    document.getElementById('htmlInput').addEventListener('keydown', e => {
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        const ta = e.target;
+        const s = ta.selectionStart;
+        ta.value = ta.value.substring(0, s) + '  ' + ta.value.substring(ta.selectionEnd);
+        ta.selectionStart = ta.selectionEnd = s + 2;
+      }
+    });
+  </script>
+
+</body>
+</html>

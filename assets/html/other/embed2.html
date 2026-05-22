@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cloaked Website (About:Blank)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #060606;
+      --panel: #0e0e0e;
+      --border: #1e1e1e;
+      --accent: #ff9900;
+      --accent-dim: rgba(255,153,0,0.15);
+      --accent-glow: rgba(255,153,0,0.4);
+      --text: #e8e8e8;
+      --muted: #555;
+      --tab-bg: #111;
+      --tab-active: #1a1a1a;
+      --header-h: 52px;
+      --tab-bar-h: 44px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Lexend', sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      height: var(--header-h);
+      background: var(--panel);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 18px;
+      gap: 14px;
+      flex-shrink: 0;
+    }
+
+    header h1 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      text-shadow: 0 0 18px var(--accent-glow);
+      flex: 1;
+    }
+
+    .header-actions { display: flex; gap: 10px; }
+
+    .btn {
+      background: transparent;
+      border: 1.5px solid var(--border);
+      color: var(--text);
+      font-family: 'Lexend', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 7px 18px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, box-shadow 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+
+    .btn-go {
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    .btn-go:hover {
+      background: var(--accent);
+      color: #000;
+      box-shadow: 0 0 16px var(--accent-glow);
+    }
+
+    @keyframes fireInside {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .btn-go.fire {
+      background-image: linear-gradient(270deg, red, orange, yellow);
+      background-size: 300% 300%;
+      animation: fireInside 3s linear infinite;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255,255,255,0.7);
+      box-shadow: inset 0 0 20px rgba(255,165,0,0.4), 0 0 25px var(--accent);
+      border-color: transparent;
+    }
+
+    .workspace {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      padding: 2rem;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      width: 100%;
+      max-width: 520px;
+      overflow: hidden;
+    }
+
+    .tab-bar {
+      height: var(--tab-bar-h);
+      background: var(--tab-bg);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      flex-shrink: 0;
+    }
+
+    .tab-bar-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .panel-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .url-input {
+      width: 100%;
+      background: var(--tab-active);
+      border: 1.5px solid var(--border);
+      border-radius: 7px;
+      color: var(--text);
+      padding: 9px 14px;
+      font-size: 13px;
+      font-family: 'JetBrains Mono', monospace;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .url-input::placeholder { color: #2a2a2a; }
+    .url-input::selection   { background: var(--accent-dim); }
+
+    .url-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    .hint {
+      font-size: 11px;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.02em;
+    }
+
+    .err-msg {
+      font-size: 12px;
+      color: #f87171;
+      font-family: 'JetBrains Mono', monospace;
+      display: none;
+    }
+
+    footer {
+      height: 26px;
+      background: var(--panel);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      font-size: 11px;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+
+    footer .left { display: flex; gap: 16px; align-items: center; }
+    footer .sep  { color: var(--border); }
+
+    .kbd {
+      background: var(--border);
+      border-radius: 3px;
+      padding: 1px 5px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>⚡ Cloaked Website (About:Blank)</h1>
+    <div class="header-actions">
+      <button class="btn btn-go" id="goBtn"
+        onmouseover="this.classList.add('fire')"
+        onmouseout="this.classList.remove('fire')"
+        onclick="cwGo()">▶ Go</button>
+    </div>
+  </header>
+
+  <div class="workspace">
+    <div class="panel">
+      <div class="tab-bar">
+        <span class="tab-bar-label">URL Input</span>
+      </div>
+      <div class="panel-body">
+        <input class="url-input" id="cwUrl" type="text" placeholder="https://example.com" spellcheck="false" />
+        <div class="err-msg" id="cwErr"></div>
+        <div class="hint">Must include https:// — popup may be blocked by browser</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="left">
+      <span>Cloaked Website</span>
+      <span class="sep">|</span>
+      <span><span class="kbd">Enter</span> to go</span>
+    </div>
+    <span>made by UNBL0CKEDZ0NE</span>
+  </footer>
+
+  <script>
+    function cwGo() {
+      const url = document.getElementById('cwUrl').value.trim();
+      const err = document.getElementById('cwErr');
+      if (!url.startsWith('https://')) {
+        err.textContent = '✕ URL must start with https://';
+        err.style.display = 'block';
+        return;
+      }
+      err.style.display = 'none';
+      const win = window.open('about:blank', '_blank');
+      if (!win) {
+        err.textContent = '✕ Popup blocked — allow popups for this site';
+        err.style.display = 'block';
+        return;
+      }
+      win.document.write(
+        '<iframe src="' + url + '" style="border:none;width:100%;height:100vh;"></iframe>'
+      );
+    }
+
+    document.getElementById('cwUrl').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') cwGo();
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>HTML Code Runner</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #060606;
+      --panel: #0e0e0e;
+      --border: #1e1e1e;
+      --accent: #ff9900;
+      --accent-dim: rgba(255,153,0,0.15);
+      --accent-glow: rgba(255,153,0,0.4);
+      --text: #e8e8e8;
+      --muted: #555;
+      --tab-bg: #111;
+      --tab-active: #1a1a1a;
+      --header-h: 52px;
+      --tab-bar-h: 44px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Lexend', sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── TOP BAR ── */
+    header {
+      height: var(--header-h);
+      background: var(--panel);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 18px;
+      gap: 14px;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    header h1 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      text-shadow: 0 0 18px var(--accent-glow);
+      flex: 1;
+    }
+
+    .header-actions { display: flex; gap: 10px; }
+
+    .btn {
+      background: transparent;
+      border: 1.5px solid var(--border);
+      color: var(--text);
+      font-family: 'Lexend', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 7px 18px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, box-shadow 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+
+    .btn-run {
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    .btn-run:hover {
+      background: var(--accent);
+      color: #000;
+      box-shadow: 0 0 16px var(--accent-glow);
+    }
+
+    .btn-run span { position: relative; z-index: 1; }
+
+    .btn-run.running {
+      background: var(--accent);
+      color: #000;
+    }
+
+    .toggle-panel-btn {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .toggle-panel-btn:hover {
+      background: var(--accent);
+      color: #000;
+      box-shadow: 0 0 16px var(--accent-glow);
+    }
+
+    /* ── MAIN LAYOUT ── */
+    .workspace {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+
+    /* ── LEFT PANEL ── */
+    .left-panel {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--border);
+      transition: width 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.35s;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .left-panel.collapsed {
+      width: 0 !important;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* ── TAB BAR ── */
+    .tab-bar {
+      height: var(--tab-bar-h);
+      background: var(--tab-bg);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: stretch;
+      flex-shrink: 0;
+      padding: 0 8px;
+      gap: 4px;
+    }
+
+    .tab {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 0 16px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      user-select: none;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    .tab:hover { color: var(--text); }
+
+    .tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .tab-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dot-html { background: #e34c26; }
+    .dot-css  { background: #264de4; }
+    .dot-js   { background: #f7df1e; }
+
+    /* ── CODE PANES ── */
+    .code-panes {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    .code-pane {
+      display: none;
+      flex: 1;
+      min-height: 0;
+      min-width: 0;
+    }
+
+    .code-pane.active { display: flex; }
+
+    .line-numbers-wrap {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+      min-width: 0;
+    }
+
+    .line-numbers {
+      background: #0a0a0a;
+      color: #444;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      padding: 14px 10px 14px 14px;
+      text-align: right;
+      width: 46px;
+      min-width: 46px;
+      max-width: 46px;
+      user-select: none;
+      overflow: hidden;
+      border-right: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: pre;
+    }
+
+    textarea.code {
+      flex: 1;
+      min-width: 0;
+      width: 0;
+      background: var(--tab-active);
+      color: var(--text);
+      border: none;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      padding: 14px 16px;
+      resize: none;
+      outline: none;
+      overflow: auto;
+      tab-size: 2;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    textarea.code::placeholder { color: #2a2a2a; }
+    textarea.code::selection   { background: var(--accent-dim); }
+
+    /* ── RIGHT PANEL ── */
+    .right-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .preview-bar {
+      height: var(--tab-bar-h);
+      background: var(--tab-bg);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .preview-bar-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 11px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #2a2a2a;
+      transition: background 0.3s, box-shadow 0.3s;
+      margin-left: auto;
+    }
+
+    .status-dot.live {
+      background: #22c55e;
+      box-shadow: 0 0 8px #22c55e;
+    }
+
+    #output {
+      flex: 1;
+      border: none;
+      background: #000;
+      display: block;
+      width: 100%;
+      color-scheme: dark;
+    }
+
+
+    /* ── CONSOLE ── */
+    .console-panel {
+      height: 180px;
+      background: #0a0a0a;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+
+    .console-bar {
+      height: 34px;
+      background: var(--tab-bg);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .console-bar-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      flex: 1;
+    }
+
+    .console-clear-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-family: 'Lexend', sans-serif;
+      font-size: 11px;
+      cursor: pointer;
+      padding: 3px 8px;
+      border-radius: 4px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .console-clear-btn:hover { color: var(--text); background: var(--border); }
+
+    .console-output {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .console-output::-webkit-scrollbar { width: 4px; }
+    .console-output::-webkit-scrollbar-track { background: transparent; }
+    .console-output::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .log-line { display: flex; gap: 10px; padding: 1px 0; border-bottom: 1px solid #111; }
+    .log-line:last-child { border-bottom: none; }
+    .log-type { width: 14px; flex-shrink: 0; opacity: 0.6; }
+    .log-text { color: var(--text); word-break: break-all; flex: 1; }
+    .log-line.log-error .log-text { color: #f87171; }
+    .log-line.log-warn  .log-text { color: #fbbf24; }
+    .log-line.log-info  .log-text { color: #60a5fa; }
+    .log-empty { color: var(--muted); font-size: 11px; padding: 4px 0; }
+    footer {
+      height: 26px;
+      background: var(--panel);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      font-size: 11px;
+      color: var(--muted);
+      flex-shrink: 0;
+      gap: 16px;
+    }
+
+    footer span { letter-spacing: 0.03em; }
+    footer .sep { color: var(--border); }
+
+    .kbd {
+      background: var(--border);
+      border-radius: 3px;
+      padding: 1px 5px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>⚡ HTML Code Runner</h1>
+    <div class="header-actions">
+      <button class="btn toggle-panel-btn" id="toggleBtn" onclick="togglePanel()">‹ Hide Editor</button>
+      <button class="btn" onclick="clearCode()">Clear</button>
+      <button class="btn btn-run" id="runButton" onclick="runCode()"><span id="runLabel">▶ Run</span></button>
+    </div>
+  </header>
+
+  <div class="workspace">
+
+    <!-- LEFT: EDITOR -->
+    <div class="left-panel" id="leftPanel">
+      <div class="tab-bar">
+        <div class="tab active" id="tab-html" onclick="switchTab('html')">
+          <span class="tab-dot dot-html"></span>HTML
+        </div>
+        <div class="tab" id="tab-css" onclick="switchTab('css')">
+          <span class="tab-dot dot-css"></span>CSS
+        </div>
+        <div class="tab" id="tab-js" onclick="switchTab('js')">
+          <span class="tab-dot dot-js"></span>JavaScript
+        </div>
+      </div>
+
+      <div class="code-panes">
+        <div class="code-pane active" id="pane-html">
+          <div class="line-numbers-wrap">
+            <div class="line-numbers" id="ln-html">1</div>
+            <textarea class="code" id="htmlCode" placeholder="<!-- HTML goes here -->" spellcheck="false"></textarea>
+          </div>
+        </div>
+        <div class="code-pane" id="pane-css">
+          <div class="line-numbers-wrap">
+            <div class="line-numbers" id="ln-css">1</div>
+            <textarea class="code" id="cssCode" placeholder="/* CSS goes here */" spellcheck="false"></textarea>
+          </div>
+        </div>
+        <div class="code-pane" id="pane-js">
+          <div class="line-numbers-wrap">
+            <div class="line-numbers" id="ln-js">1</div>
+            <textarea class="code" id="jsCode" placeholder="// JavaScript goes here" spellcheck="false"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+<!-- RIGHT: PREVIEW -->
+    <div class="right-panel">
+      <div class="preview-bar">
+        <span class="preview-bar-label">Output Preview</span>
+        <div class="status-dot" id="statusDot"></div>
+      </div>
+      <iframe id="output"></iframe>
+      <div class="console-panel">
+        <div class="console-bar">
+          <span class="console-bar-label">Console</span>
+          <span id="consoleCount" style="font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace;"></span>
+          <button class="console-clear-btn" onclick="clearConsole()">Clear</button>
+        </div>
+        <div class="console-output" id="consoleOutput">
+          <span class="log-empty">Console output will appear here…</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <span>HTML Code Runner</span>
+    <span class="sep">|</span>
+    <span><span class="kbd">Ctrl+Enter</span> to run</span>
+    <span class="sep">|</span>
+    <span>made by UNBL0CKEDZ0NE</span>
+  </footer>
+
+  <script>
+    let panelVisible = true;
+    let activeTab = 'html';
+
+    /* ── TAB SWITCHING ── */
+    function switchTab(name) {
+      activeTab = name;
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.code-pane').forEach(p => p.classList.remove('active'));
+      document.getElementById('tab-' + name).classList.add('active');
+      document.getElementById('pane-' + name).classList.add('active');
+      updateLineNumbers(name);
+    }
+
+    /* ── LINE NUMBERS ── */
+    function updateLineNumbers(id) {
+      const ta = document.getElementById(id === 'html' ? 'htmlCode' : id === 'css' ? 'cssCode' : 'jsCode');
+      const ln = document.getElementById('ln-' + id);
+      const lines = ta.value.split('\n').length;
+      ln.textContent = Array.from({length: lines}, (_, i) => i + 1).join('\n');
+      ln.scrollTop = ta.scrollTop;
+    }
+
+    ['html','css','js'].forEach(id => {
+      const taId = id === 'html' ? 'htmlCode' : id === 'css' ? 'cssCode' : 'jsCode';
+      const ta = document.getElementById(taId);
+      ta.addEventListener('input', () => updateLineNumbers(id));
+      ta.addEventListener('scroll', () => {
+        const ln = document.getElementById('ln-' + id);
+        ln.scrollTop = ta.scrollTop;
+      });
+      ta.addEventListener('keydown', e => {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          const start = ta.selectionStart;
+          const end = ta.selectionEnd;
+          ta.value = ta.value.substring(0, start) + '  ' + ta.value.substring(end);
+          ta.selectionStart = ta.selectionEnd = start + 2;
+          updateLineNumbers(id);
+        }
+        if (e.ctrlKey && e.key === 'Enter') runCode();
+      });
+    });
+
+    /* ── TOGGLE PANEL ── */
+    function togglePanel() {
+      panelVisible = !panelVisible;
+      const panel = document.getElementById('leftPanel');
+      const btn   = document.getElementById('toggleBtn');
+      if (panelVisible) {
+        panel.classList.remove('collapsed');
+        btn.textContent = '‹ Hide Editor';
+      } else {
+        panel.classList.add('collapsed');
+        btn.textContent = '› Show Editor';
+      }
+    }
+
+    /* ── CONSOLE ── */
+    let logCount = 0;
+
+    function clearConsole() {
+      logCount = 0;
+      document.getElementById('consoleOutput').innerHTML = '<span class="log-empty">Console output will appear here…</span>';
+      document.getElementById('consoleCount').textContent = '';
+    }
+
+    function appendLog(type, args) {
+      const out = document.getElementById('consoleOutput');
+      // Remove placeholder
+      const empty = out.querySelector('.log-empty');
+      if (empty) empty.remove();
+
+      logCount++;
+      document.getElementById('consoleCount').textContent = logCount + ' message' + (logCount !== 1 ? 's' : '');
+
+      const icons = { log: '›', error: '✕', warn: '⚠', info: 'ℹ' };
+      const line = document.createElement('div');
+      line.className = 'log-line log-' + type;
+      line.innerHTML = `<span class="log-type">${icons[type] || '›'}</span><span class="log-text">${escHtml(args)}</span>`;
+      out.appendChild(line);
+      out.scrollTop = out.scrollHeight;
+    }
+
+    function escHtml(str) {
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    window.addEventListener('message', e => {
+      if (e.data && e.data.__consoleType) {
+        appendLog(e.data.__consoleType, e.data.__consoleArgs);
+      }
+    });
+
+    /* ── CONSOLE INJECTOR ── */
+    const CONSOLE_SHIM = `
+<script>
+(function(){
+  const _send = function(type, args) {
+    try { window.parent.postMessage({ __consoleType: type, __consoleArgs: Array.from(args).map(a => { try { return typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a); } catch(e){ return String(a); } }).join(' ') }, '*'); } catch(e){}
+  };
+  ['log','warn','error','info'].forEach(function(m){
+    var orig = console[m].bind(console);
+    console[m] = function(){ orig.apply(console, arguments); _send(m, arguments); };
+  });
+  window.addEventListener('error', function(e){ _send('error', [e.message + (e.lineno ? ' (line ' + e.lineno + ')' : '')]); });
+  window.addEventListener('unhandledrejection', function(e){ _send('error', ['Unhandled promise rejection: ' + e.reason]); });
+})();
+<\/script>`;
+    function runCode() {
+      const html = document.getElementById('htmlCode').value;
+      const css  = document.getElementById('cssCode').value;
+      const js   = document.getElementById('jsCode').value;
+
+      clearConsole();
+
+      const output = document.getElementById('output');
+      const doc = output.contentDocument || output.contentWindow.document;
+
+      const fullCode = `<!DOCTYPE html><html><head><meta charset="UTF-8">${CONSOLE_SHIM}<style>${css}</style></head><body>${html}<script>${js}<\/script></body></html>`;
+
+      doc.open();
+      doc.write(fullCode);
+      doc.close();
+
+      const btn   = document.getElementById('runButton');
+      const label = document.getElementById('runLabel');
+      const dot   = document.getElementById('statusDot');
+
+      btn.classList.add('running');
+      label.textContent = '✓ Running';
+      dot.classList.add('live');
+
+      setTimeout(() => {
+        btn.classList.remove('running');
+        label.textContent = '▶ Run';
+      }, 1500);
+    }
+
+    /* ── CLEAR ── */
+    function clearCode() {
+      document.getElementById('htmlCode').value = '';
+      document.getElementById('cssCode').value  = '';
+      document.getElementById('jsCode').value   = '';
+      ['html','css','js'].forEach(id => updateLineNumbers(id));
+
+      const output = document.getElementById('output');
+      const doc = output.contentDocument || output.contentWindow.document;
+      doc.open(); doc.write(''); doc.close();
+
+      document.getElementById('statusDot').classList.remove('live');
+    }
+
+
+    /* ── INIT LINE NUMBERS ── */
+    ['html','css','js'].forEach(id => updateLineNumbers(id));
+  </script>
+</body>
+</html>
