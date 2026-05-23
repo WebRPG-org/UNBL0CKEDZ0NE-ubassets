@@ -43,6 +43,15 @@
       transition: opacity 0.5s ease;
     }
     #loading-screen.hidden { opacity: 0; pointer-events: none; }
+    #load-note {
+      position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px);
+      background: rgba(255,102,0,.12); border: 1px solid rgba(255,102,0,.3);
+      color: #ff6600; padding: 12px 24px; border-radius: 10px;
+      font-size: 14px; font-weight: bold; z-index: 9998;
+      opacity: 0; transition: all 0.4s ease; pointer-events: none;
+      text-align: center; max-width: 90vw;
+    }
+    #load-note.show { opacity: 1; transform: translateX(-50%) translateY(0); }
     #loading-screen svg { margin-bottom: 16px; }
     .loading-school-name { color: white; font-size: 18px; margin-bottom: 32px; }
     .loading-stripe {
@@ -161,7 +170,7 @@
     .media-cat {
       background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
       color: #ccc; padding: 8px 18px; border-radius: 8px; cursor: pointer;
-      font-size: 14px; transition: all 0.2s;
+      font-size: 14px; font-family: 'Pixelify Sans', sans-serif; transition: all 0.2s;
     }
     .media-cat:hover, .media-cat.active {
       background: #ff8c00; color: #000; border-color: #ff8c00;
@@ -250,6 +259,8 @@
       font-size: 48px; border-bottom: 2px solid var(--accent);
     }
     .card-img img { display:block; }
+    #media-manga .card-img { height: auto; aspect-ratio: 655/1000; }
+    #media-manga .card-img img { height: 100%; object-fit: cover; }
     .card-info { padding: 16px; text-align: center; }
     .card h3 { font-size: 18px; margin-bottom: 6px; color: var(--accent); }
     .card p { font-size: 13px; color: #ff8c00; margin: 0; text-align: center; }
@@ -446,13 +457,14 @@
     <div class="loading-school-name">Restricted Independent School District</div>
     <div class="loading-stripe">
       <div class="top-text">Oops,</div>
-      <div class="website">donotblockthislink.ub</div>
-      <div class="bottom-text">is not available because it is blocked for Games.</div>
+      <div class="website">2kp6j7kpq2m9xlb.ub</div>
+      <div class="bottom-text">is not available because it is blocked for █████.</div>
     </div>
     <div class="loading-system-msg">
       You are logged in as student111@risd.edu (IP Address: 111.111.1111).
     </div>
     </div>
+  <div id="load-note">v4.01 | I spent like too long making this new site, so please recommend my site to more people! - ʊռɮʟօƈӄɛɖʐօռɛ</div>
 
   <canvas id="bg-canvas"></canvas>
 
@@ -494,18 +506,18 @@
           <div class="full-date" id="fullDate">MAY 03, 2026</div>
         </div>
         <h2>Welcome to UNBL0CKEDZ0NE</h2>
-        <p>Your ultimate unblocked entertainment hub. Browse movies, TV shows, music, games, proxies, and more — all in one place.</p>
+        <p>We got everything because I am just the best. - ʊռɮʟօƈӄɛɖʐօռɛ</p>
         <div class="search-bar">
           <input type="text" id="home-search-input" placeholder="Search games">
         </div>
         <div class="quote-section">
-          <div id="quote">There is Currently 168 G4mes! - ʊռɮʟօƈӄɛɖʐօռɛ</div>
+          <div id="quote">There is Currently 175 G4mes! - ʊռɮʟօƈӄɛɖʐօռɛ</div>
         </div>
       </div>
 
       <div class="tab-content" id="media">
         <h2>Media</h2>
-        <p>Movies, TV shows, music, and manga — all in one place.</p>
+        <p>I am not responsible if you get in trouble for watching movies or listening to music! - ʊռɮʟօƈӄɛɖʐօռɛ</p>
         <div class="media-categories">
           <button class="media-cat active" data-media="tv">📺 TV Shows</button>
           <button class="media-cat" data-media="movies" data-external="https://sites.google.com/view/3xp7vm9zq2wb5nr8tyv4xc1om6pz3k/kP9vX2mQ7zWb5nR4tYv8xC1oM6pZ3jK9sBf4hG7dX2wL1vN5mQ8zP3kR9sBf4hG7dX2wL1vN5m/1a2b3C4d5E6f7G8h9I0j1K2l3M4n5O6p7Q8r9S0t1U2v3W4x5Y6z7A8b9C0d1E2f3G4h5I6j7K/w8Y9vK2xM4qR1pL5zC3bN8mX7jA9vF2wP6kL3hJ9nC4xZ8mB7vN1qW4rD6yT2pM9sK4cQ8/7bN4mK9xQ2wP8zR3vT6yL1fG5hD8jS2kX4mQ9zP1vB7nR3tW6jK2sF5hG8dX4wL1vN9mQ3zP/F9vM3xQ7zWb5nR1tYv8xC4oM2pZ6jK9sBf3hG7dX5wL1vN8mQ2zP4kR6sBf9hG3dX7wL1vN5/">🎬 Movies</button>
@@ -577,52 +589,130 @@
             <input type="text" placeholder="Search manga...">
           </div>
           <div class="card-grid">
-            <a href="#" class="card">
-              <div class="card-img">🗡️</div>
+            <a href="https://drive.google.com/drive/folders/12tApujIKnQjaSlTRchrO0AZ8WhvhaNtl" target="_blank" class="card">
+              <div class="card-img"><img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/manga/solo.png" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"></div>
               <div class="card-info">
-                <h3>[Manga Title]</h3>
-                <p>Action / 200+ Chapters</p>
-                <span class="card-tag">ONGOING</span>
+                <h3>Solo Leveling</h3>
               </div>
             </a>
-            <a href="#" class="card">
-              <div class="card-img">🎒</div>
+            <a href="https://drive.google.com/drive/folders/1LNhG5Hjk4p9eJqvt0ooEpyAqnQRzJwYE" target="_blank" class="card">
+              <div class="card-img"><img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/manga/note.png" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"></div>
               <div class="card-info">
-                <h3>[Manga Title]</h3>
-                <p>Adventure / 100+ Chapters</p>
-                <span class="card-tag">COMPLETED</span>
+                <h3>Death Note</h3>
               </div>
             </a>
-            <a href="#" class="card">
-              <div class="card-img">👨‍🎓</div>
+            <a href="https://drive.google.com/drive/folders/14Ri_EP2Q6HxWJQbU97ZEAjSc9MfTmKI3" target="_blank" class="card">
+              <div class="card-img"><img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/manga/berserk.png" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"></div>
               <div class="card-info">
-                <h3>[Manga Title]</h3>
-                <p>Slice of Life / 50+ Chapters</p>
-                <span class="card-tag">ONGOING</span>
+                <h3>Berserk</h3>
               </div>
             </a>
-            <a href="#" class="card">
-              <div class="card-img">⚡</div>
+            <a href="https://drive.google.com/drive/folders/1GZKLsvSvgvHfM3CXg4DrCh4d0tGb0NLX" target="_blank" class="card">
+              <div class="card-img"><img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/manga/spy.png" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"></div>
               <div class="card-info">
-                <h3>[Manga Title]</h3>
-                <p>Shonen / 300+ Chapters</p>
-                <span class="card-tag">COMPLETED</span>
+                <h3>Spy X Family</h3>
               </div>
             </a>
-            <a href="#" class="card">
-              <div class="card-img">🧙</div>
+            <a href="https://drive.google.com/drive/folders/1IMqZo3XL_Go8PYa8i5iMH-3w5kEE-fTC" target="_blank" class="card">
+              <div class="card-img"><img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/manga/kingdom.png" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"></div>
               <div class="card-info">
-                <h3>[Manga Title]</h3>
-                <p>Fantasy / 150+ Chapters</p>
-                <span class="card-tag">ONGOING</span>
+                <h3>Kingdom Hearts</h3>
               </div>
             </a>
-            <a href="#" class="card">
-              <div class="card-img">🤖</div>
+            <a href="https://drive.google.com/drive/folders/1uiqdQByTMfGeeQV8ut3o0BYuZu52CR7i" target="_blank" class="card">
+              <div class="card-img"><img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/manga/drstone.png" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"></div>
               <div class="card-info">
-                <h3>[Manga Title]</h3>
-                <p>Sci-Fi / 80+ Chapters</p>
-                <span class="card-tag">ONGOING</span>
+                <h3>Dr. Stone</h3>
+              </div>
+            </a>
+            <a href="https://drive.google.com/drive/folders/1DiPmxSEnK8mffjlJv-Mrka-Pg_qw5Zlj" target="_blank" class="card">
+              <div class="card-img"><img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/manga/zelda.png" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"></div>
+              <div class="card-info">
+                <h3>The Legend of Zelda</h3>
+              </div>
+            </a>
+            <a href="https://drive.google.com/drive/u/0/folders/1OqoLf9E0z6e2MRD2g3UNKP3hE9puC4ts" target="_blank" class="card">
+              <div class="card-img"><img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/manga/fullmetal.png" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"></div>
+              <div class="card-info">
+                <h3>Fullmetal Alchemist</h3>
+              </div>
+            </a>
+            <a href="https://drive.google.com/drive/folders/1n7qvsviHVecx08qMxI0bTRzpO3WmAEjG" target="_blank" class="card">
+              <div class="card-img"><img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/manga/yasha.png" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"></div>
+              <div class="card-info">
+                <h3>Inuyasha</h3>
+              </div>
+            </a>
+            <a href="https://drive.google.com/drive/folders/1psqilwlG-rU_MRv5rn-ac-8UqNnQDor1" target="_blank" class="card">
+              <div class="card-img"><img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/manga/mha2.png" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"></div>
+              <div class="card-info">
+                <h3>My Hero Academia (Chapters 377-384)</h3>
+              </div>
+            </a>
+            <a href="https://drive.google.com/drive/u/0/folders/1u-a-NGgGUHD-h5RBtVkYnp8TwJosaJIe" target="_blank" class="card">
+              <div class="card-img"><img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/manga/dan.png" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"></div>
+              <div class="card-info">
+                <h3>Dandadan</h3>
+              </div>
+            </a>
+            <a href="https://drive.google.com/drive/folders/1QKSJxCrNtvP7Li3lLz0GhuTV7WrbXMiS" target="_blank" class="card">
+              <div class="card-img"><img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/manga/pokemon.png" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"></div>
+              <div class="card-info">
+                <h3>Pokémon Adventures</h3>
+              </div>
+            </a>
+            <a href="https://drive.google.com/drive/folders/1hcGBwfdgJchkPlZMX55YF52aZRNdbXW9" target="_blank" class="card">
+              <div class="card-img"><img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/manga/bluelock.png" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"></div>
+              <div class="card-info">
+                <h3>Blue Lock</h3>
+              </div>
+            </a>
+            <a href="https://drive.google.com/drive/folders/1TZ6z_ePBI2zt12Kqv0I2AYegGR6LjOrp" target="_blank" class="card">
+              <div class="card-img"><img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/manga/dbz.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"></div>
+              <div class="card-info">
+                <h3>Dragon Ball</h3>
+              </div>
+            </a>
+            <a href="https://drive.google.com/drive/folders/1iSzHqkCiW5S44-_97x_6x_pTTMJrPrMH" target="_blank" class="card">
+              <div class="card-img"><img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/manga/dbz2.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"></div>
+              <div class="card-info">
+                <h3>Dragon Ball Super (Color)</h3>
+              </div>
+            </a>
+            <a href="https://drive.google.com/drive/folders/1hyV1oaf6Cj-DiwYljSNt10xHOnAxjila" target="_blank" class="card">
+              <div class="card-img"><img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/manga/dbz3.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"></div>
+              <div class="card-info">
+                <h3>Dragon Ball Super</h3>
+              </div>
+            </a>
+            <a href="https://drive.google.com/drive/folders/1JYZKlpyw20ghU7LHLs6ECUISE9SDZ7_D" target="_blank" class="card">
+              <div class="card-img"><img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/manga/jjk.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"></div>
+              <div class="card-info">
+                <h3>Jujutsu Kaisen</h3>
+              </div>
+            </a>
+            <a href="https://drive.google.com/drive/u/0/folders/1dHK5v5NZNiDvlQ9VK06AAPFNngnkkQCZ" target="_blank" class="card">
+              <div class="card-img"><img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/manga/naruto.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"></div>
+              <div class="card-info">
+                <h3>Naruto</h3>
+              </div>
+            </a>
+            <a href="https://drive.google.com/drive/folders/1Rl63s8mf0P41xy-bVNamLoEz7xAkf-nL" target="_blank" class="card">
+              <div class="card-img"><img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/manga/sonic.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"></div>
+              <div class="card-info">
+                <h3>Sonic the Hedgehog</h3>
+              </div>
+            </a>
+            <a href="https://drive.google.com/drive/folders/1ilEix-RfR10sBDAejkvzVubhCr_bSagf" target="_blank" class="card">
+              <div class="card-img"><img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/manga/sonic2.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"></div>
+              <div class="card-info">
+                <h3>Sonic the Hedgehog IDW</h3>
+              </div>
+            </a>
+            <a href="https://drive.google.com/drive/u/0/folders/1WN7L9-wnnM0-QDZFrsAyjq6ok-n2DsHL" target="_blank" class="card">
+              <div class="card-img"><img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/manga/soul.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"></div>
+              <div class="card-info">
+                <h3>Soul Eater</h3>
               </div>
             </a>
           </div>
@@ -631,7 +721,7 @@
 
       <div class="tab-content" id="tools">
         <h2>Tools</h2>
-        <p>Useful browser tools and utilities.</p>
+        <p>Useful browser tools and utilities. - ʊռɮʟօƈӄɛɖʐօռɛ</p>
         <div style="display:grid;gap:12px;">
           <a href="#" class="proxy-section" style="text-decoration:none;display:block;" onclick="event.preventDefault();openGame('Code Editor','https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/html/other/runner.html');">
             <div style="display:flex;align-items:center;gap:12px;">
@@ -683,7 +773,7 @@
 
       <div class="tab-content" id="games">
         <h2>Games</h2>
-        <p>Play browser games from multiple sources — all unblocked and ready to go!</p>
+        <p>Play 7.5K G4mes from Multiple Sources!</p>
         <div class="search-bar">
           <input type="text" id="game-search" placeholder="Search games...">
         </div>
@@ -707,7 +797,7 @@
 
       <div class="tab-content" id="proxy">
         <h2>Proxy Links</h2>
-        <p>Access blocked sites through these trusted proxy links. Stay safe out there!</p>
+        <p>These links do get updated so don't worry. - ʊռɮʟօƈӄɛɖʐօռɛ</p>
         <div style="display:flex;flex-direction:column;gap:24px;margin-top:16px;">
 
           <div class="proxy-section">
@@ -842,7 +932,7 @@
 
       <div class="tab-content" id="partners">
         <h2>Partners</h2>
-        <p>Shoutout to our awesome partners who help keep UNBL0CKEDZ0NE running!</p>
+        <p>Shoutout to these people, they have good sites. - ʊռɮʟօƈӄɛɖʐօռɛ</p>
         <div class="partner-grid">
           <div class="partner-card">
             <img class="partner-img" src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/epik.png" alt="Ale's Epik Games" loading="lazy">
@@ -1110,6 +1200,10 @@
         cursorCanvas.style.display = 'none';
         loadingScreen.classList.add('hidden');
         setTimeout(() => { loadingScreen.style.display = 'none'; mainContent.classList.add('visible'); }, 500);
+        setTimeout(() => {
+          const note = document.getElementById('load-note');
+          if (note) { note.classList.add('show'); setTimeout(() => note.classList.remove('show'), 6000); }
+        }, 3500);
       }
     }, 50);
 
@@ -1505,8 +1599,7 @@
       } catch(e) { console.warn("CKV load failed:", e); }
     }
 
-    // ─── Lumin SDK (proper API-based loader) ───
-    const LUMIN_API = 'https://a.luminsdk.com/api/v1';
+    // ─── Lumin SDK loader ───
 
     function formatZoneId(id) {
       return id.replace(/^cl/, '').replace(/([a-z])([A-Z])/g, '$1 $2').replace(/[_-]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase()).trim() || id;
@@ -1517,38 +1610,33 @@
       const games = [];
       const fallback = "https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/fallback.png";
 
-      // 1. Load from Lumin API (sequential to avoid rate limits)
-      try {
-        const sessRes = await fetch(LUMIN_API + '/session', {method:'POST'});
-        if (!sessRes.ok) { console.warn('Lumin API: session POST failed', sessRes.status, await sessRes.text().catch(function(){})); return; }
-        const sess = await sessRes.json();
-        const sid = sess.session_id;
-        if (!sid) { console.warn('Lumin API: no session in response', sess); return; }
-        console.log('[Lumin] session_id:', sid);
-        const S = function(path) { return LUMIN_API + path + (path.indexOf('?')>0?'&':'?') + 'session_id=' + sid; };
-        const metaRes = await fetch(S('/games?page=1'));
-        const meta = await metaRes.json();
-        if (metaRes.status === 401) console.log('[Lumin] /games returned 401 but body has data (non-critical)');
-        console.log('[Lumin] /games meta:', JSON.stringify(meta).slice(0,200));
-        const pages = Math.min(meta.pages || 1, 49);
-        for (let p = 1; p <= pages; p++) {
-          try {
-            const res = await fetch(S('/games?page=' + p));
-            const data = await res.json();
-            if (data.games) {
-              data.games.forEach(g => {
-                games.push(normalizeGame({
-                  name: g.name,
-                  img: g.image_token ? `${LUMIN_API}/icon/${g.image_token}` : fallback,
-                  url: g.id ? `${LUMIN_API}/play/${g.id}` : ''
-                }));
-              });
-            }
-          } catch(e) { /* skip failed page */ }
-        }
-      } catch(e) { console.warn("Lumin API failed:", e); }
+      // 1. Load from Lumin SDK
+      if (typeof Lumin !== 'undefined') {
+        try {
+          await Lumin.init({ headless: true });
+          const pages = 5;
+          for (let p = 1; p <= pages; p++) {
+            try {
+              const result = await Lumin.getGames({ page: p, limit: 48 });
+              if (result && result.games) {
+                for (const g of result.games) {
+                  let img = fallback;
+                  try {
+                    if (g.image_token) img = await Lumin.getImageUrl(g.image_token);
+                  } catch(e) {}
+                  games.push(normalizeGame({
+                    name: g.name,
+                    img,
+                    url: 'lumin:' + g.id
+                  }));
+                }
+              }
+            } catch(e) { /* skip failed page */ }
+          }
+        } catch(e) { console.warn("Lumin SDK init failed:", e); }
+      }
 
-      // 2. Load from zonesv2 (nikehub curated list via NoseyGames/freebuisness)
+      // 2. Load from zonesv2 (fallback)
       try {
         const zoneText = await fetch('https://cdn.jsdelivr.net/gh/NoseyGames/data@main/zonesv2.js').then(r => r.text());
         const zoneIds = zoneText.match(/'([^']+)'/g);
@@ -1647,7 +1735,17 @@
           <img loading="lazy" decoding="async" crossorigin="anonymous" src="${g.img || fallback}" onerror="this.onerror=null;this.src='${fallback}'">
           <h3>${g.name.replace(/</g,'&lt;')}</h3>
           <div class="play-btn">Play</div>`;
-        card.querySelector('.play-btn').onclick = () => openGame(g.name, g.url);
+        const isLumin = g.url.startsWith('lumin:');
+        card.querySelector('.play-btn').onclick = async () => {
+          let playUrl = g.url;
+          if (isLumin) {
+            try {
+              const result = await Lumin.getGameUrl(g.url.slice(6));
+              if (result && result.url) playUrl = result.url;
+            } catch(e) { console.warn('Lumin play failed:', e); }
+          }
+          openGame(g.name, playUrl);
+        };
         gameGrid.appendChild(card);
       });
     }
