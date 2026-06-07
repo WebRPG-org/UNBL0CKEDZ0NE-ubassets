@@ -441,9 +441,25 @@
     .submit-btn:hover { background: #ff8c00; box-shadow: 0 0 20px rgba(255,102,0,0.5); }
 
     .quote-section {
-      text-align: center; padding: 20px;
-      min-height: 60px; display: flex;
-      align-items: center; justify-content: center;
+      margin: 24px 0 0; text-align: center;
+    }
+    #quote {
+      color: var(--accent); font-size: 14px; font-weight: 600;
+      display: inline-block; text-align: center;
+    }
+    .social-links {
+      display: flex; align-items: center; justify-content: center;
+      gap: 12px; margin-top: 20px;
+    }
+    .social-btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(255,102,0,0.08); border: 1px solid rgba(255,102,0,0.2);
+      color: var(--accent); transition: all 0.2s;
+    }
+    .social-btn:hover {
+      background: var(--accent); color: #000;
+      box-shadow: 0 0 12px rgba(255,102,0,0.4);
     }
     #quote {
       color: var(--accent); font-size: 1.1rem; font-style: italic;
@@ -595,7 +611,11 @@
         <button class="sidebar-btn" data-tab="console">
           <span class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span> Console
         </button>
+        <button class="sidebar-btn" id="music-btn" type="button" data-tab="music" onclick="toggleMusic()">
+          <span class="icon" id="music-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/></svg></span> Music
+        </button>
       </nav>
+      <audio id="bg-music" preload="auto"></audio>
     </aside>
 
     <main id="content-area">
@@ -633,6 +653,11 @@
         </div>
         <div class="quote-section">
           <div id="quote">There is Currently 175 G4mes! - ʊռɮʟօƈӄɛɖʐօռɛ</div>
+        </div>
+        <div class="social-links">
+          <a href="https://www.tiktok.com/@unblockedzone" target="_blank" class="social-btn" title="TikTok"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"></path></svg></a>
+          <a href="https://www.youtube.com/@realunblockedzone" target="_blank" class="social-btn" title="YouTube"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.7 3.5 12 3.5 12 3.5s-7.7 0-9.4.6A3 3 0 0 0 .5 6.2C0 7.9 0 12 0 12s0 4.1.5 5.8a3 3 0 0 0 2.1 2.1c1.7.6 9.4.6 9.4.6s7.7 0 9.4-.6a3 3 0 0 0 2.1-2.1C24 16.1 24 12 24 12s0-4.1-.5-5.8zM9.75 15.5v-7l6.5 3.5-6.5 3.5z" fill="currentColor" stroke="none"></path></svg></a>
+          <a href="https://discord.gg/v66D3fn4kD" target="_blank" class="social-btn" title="Discord"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z" fill="currentColor" stroke="none"></path></svg></a>
         </div>
       </div>
 
@@ -1040,7 +1065,7 @@
         <h2>Tools</h2>
         <p>Useful browser tools and utilities. - ʊռɮʟօƈӄɛɖʐօռɛ</p>
         <div style="display:grid;gap:12px;">
-          <a href="#" class="proxy-section" style="text-decoration:none;display:block;" onclick="event.preventDefault();openGame('Code Editor','https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/html/other/runner.html');">
+          <a href="#" class="proxy-section" style="text-decoration:none;display:block;" onclick="event.preventDefault();fetchTool('https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/html/other/runner.html','Code Editor');">
             <div style="display:flex;align-items:center;gap:12px;">
               <img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/vscode.png" style="width:40px;height:40px;border-radius:50%;object-fit:contain;background:rgba(255,102,0,.1);padding:6px;">
               <div>
@@ -1049,7 +1074,7 @@
               </div>
             </div>
           </a>
-          <a href="#" class="proxy-section" style="text-decoration:none;display:block;" onclick="event.preventDefault();openGame('HTML Embedder','https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/html/other/embed.html');">
+          <a href="#" class="proxy-section" style="text-decoration:none;display:block;" onclick="event.preventDefault();fetchTool('https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/html/other/embed.html','HTML Embedder');">
             <div style="display:flex;align-items:center;gap:12px;">
               <img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/embed.png" style="width:40px;height:40px;border-radius:50%;object-fit:contain;background:rgba(255,102,0,.1);padding:6px;">
               <div>
@@ -1058,7 +1083,7 @@
               </div>
             </div>
           </a>
-          <a href="#" class="proxy-section" style="text-decoration:none;display:block;" onclick="event.preventDefault();openGame('Website Embedder','https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/html/other/embed2.html');">
+          <a href="#" class="proxy-section" style="text-decoration:none;display:block;" onclick="event.preventDefault();fetchTool('https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/html/other/embed2.html','Website Embedder');">
             <div style="display:flex;align-items:center;gap:12px;">
               <img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/aboutblank.png" style="width:40px;height:40px;border-radius:50%;object-fit:contain;background:rgba(255,102,0,.1);padding:6px;">
               <div>
@@ -1067,7 +1092,7 @@
               </div>
             </div>
           </a>
-          <a href="#" class="proxy-section" style="text-decoration:none;display:block;" onclick="event.preventDefault();openGame('History Flooder','https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/html/other/history.html');">
+          <a href="#" class="proxy-section" style="text-decoration:none;display:block;" onclick="event.preventDefault();fetchTool('https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/html/other/history.html','History Flooder');">
             <div style="display:flex;align-items:center;gap:12px;">
               <img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/history.png" style="width:40px;height:40px;border-radius:50%;object-fit:contain;background:rgba(255,102,0,.1);padding:6px;">
               <div>
@@ -1076,7 +1101,7 @@
               </div>
             </div>
           </a>
-            <a href="#" class="proxy-section" style="text-decoration:none;display:block;" onclick="event.preventDefault();openGame('Screen Sharer','https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/html/other/share.html');">
+            <a href="#" class="proxy-section" style="text-decoration:none;display:block;" onclick="event.preventDefault();fetchTool('https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/html/other/share.html','Screen Sharer');">
               <div style="display:flex;align-items:center;gap:12px;">
                 <img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/screen.png" style="width:40px;height:40px;border-radius:50%;object-fit:contain;background:rgba(255,102,0,.1);padding:6px;">
                 <div>
@@ -1085,7 +1110,7 @@
                 </div>
               </div>
             </a>
-            <a href="#" class="proxy-section" style="text-decoration:none;display:block;" onclick="event.preventDefault();openGame('MP3/MP4 Player','https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/html/other/mp3.html');">
+            <a href="#" class="proxy-section" style="text-decoration:none;display:block;" onclick="event.preventDefault();fetchTool('https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/html/other/mp3.html','MP3/MP4 Player');">
               <div style="display:flex;align-items:center;gap:12px;">
                 <img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/mp3.png" style="width:40px;height:40px;border-radius:50%;object-fit:contain;background:rgba(255,102,0,.1);padding:6px;">
                 <div>
@@ -1254,6 +1279,123 @@
               <a href="https://script.google.com/macros/s/AKfycbz13Vz3OSfDN6tb2vrir6rvyU6H85-fw0MRj4xZ_4xrrYZioYnWrHpUQDaqKazSEOW0zg/exec" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">script.google.com/macros/s/AKfycbz13Vz3OSfD...</a>
               <a href="https://script.google.com/macros/s/AKfycbw_lbYtmMqCNRuoUrGZP4wkNTOBpadhUkPJGpeTn8Wq9AZmK-1IesDwfPwvMW6Hy9lS3Q/exec" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">script.google.com/macros/s/AKfycbw_lbYtmMqCN...</a>
               <a href="https://script.google.com/macros/s/AKfycbyW_ki9nsajUfu7Q6w-5K2XQU7sr1BQ4udz7DCH67O604hQs3yXns-KRQCCRQVM52KvMw/exec" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">script.google.com/macros/s/AKfycbyW_ki9nsajU...</a>
+
+              <div style="color:#ff8c00;font-size:12px;font-weight:bold;margin-top:8px;">web.app Links</div>
+              <a href="https://semboyfex.web.app/" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">semboyfex.web.app</a>
+              <a href="https://bradarwhatisthis.web.app/" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">bradarwhatisthis.web.app</a>
+              <a href="https://detalmick.web.app/" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">detalmick.web.app</a>
+
+              <div style="color:#ff8c00;font-size:12px;font-weight:bold;margin-top:8px;">Padlet Links</div>
+              <a href="https://padlet-uploads-usc1.storage.googleapis.com/4870566023/1c125a7cc361a70729da3e3c091ef2e1/ub.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">padlet-uploads-usc1.storage.googleapis.com (1)</a>
+              <a href="https://padlet-uploads-usc1.storage.googleapis.com/4870566023/b26f632cb871d2f9ebfde1bb203e29b8/ub.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">padlet-uploads-usc1.storage.googleapis.com (2)</a>
+
+              <div style="color:#ff8c00;font-size:12px;font-weight:bold;margin-top:8px;">npm @1.0.0 Links</div>
+              <a href="https://raw.esm.sh/ubzone@1.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">raw.esm.sh/ubzone@1.0.0/assets/index.svg</a>
+              <a href="https://esm.sh/ubzone@1.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">esm.sh/ubzone@1.0.0/assets/index.svg</a>
+              <a href="https://unpkg.com/ubzone@1.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">unpkg.com/ubzone@1.0.0/assets/index.svg</a>
+              <a href="https://cdn.jsdelivr.net/npm/ubzone@1.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdelivr.net/npm/ubzone@1.0.0/assets/index.svg</a>
+              <a href="https://fastly.jsdelivr.net/npm/ubzone@1.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">fastly.jsdelivr.net/npm/ubzone@1.0.0/assets/index.svg</a>
+              <a href="https://testingcf.jsdelivr.net/npm/ubzone@1.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">testingcf.jsdelivr.net/npm/ubzone@1.0.0/assets/index.svg</a>
+              <a href="https://gcore.jsdelivr.net/npm/ubzone@1.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">gcore.jsdelivr.net/npm/ubzone@1.0.0/assets/index.svg</a>
+              <a href="https://quantil.jsdelivr.net/npm/ubzone@1.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">quantil.jsdelivr.net/npm/ubzone@1.0.0/assets/index.svg</a>
+              <a href="https://originfastly.jsdelivr.net/npm/ubzone@1.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">originfastly.jsdelivr.net/npm/ubzone@1.0.0/assets/index.svg</a>
+              <a href="https://jsd.onmicrosoft.cn/npm/ubzone@1.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">jsd.onmicrosoft.cn/npm/ubzone@1.0.0/assets/index.svg</a>
+              <a href="https://cdn.jsdmirror.com/npm/ubzone@1.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdmirror.com/npm/ubzone@1.0.0/assets/index.svg</a>
+              <a href="https://cdn.staticdelivr.com/npm/ubzone@1.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.staticdelivr.com/npm/ubzone@1.0.0/assets/index.svg</a>
+
+              <div style="color:#ff8c00;font-size:12px;font-weight:bold;margin-top:8px;">npm @2.0.0 Links</div>
+              <a href="https://raw.esm.sh/ubzone@2.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">raw.esm.sh/ubzone@2.0.0/assets/index.svg</a>
+              <a href="https://esm.sh/ubzone@2.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">esm.sh/ubzone@2.0.0/assets/index.svg</a>
+              <a href="https://unpkg.com/ubzone@2.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">unpkg.com/ubzone@2.0.0/assets/index.svg</a>
+              <a href="https://cdn.jsdelivr.net/npm/ubzone@2.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdelivr.net/npm/ubzone@2.0.0/assets/index.svg</a>
+              <a href="https://fastly.jsdelivr.net/npm/ubzone@2.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">fastly.jsdelivr.net/npm/ubzone@2.0.0/assets/index.svg</a>
+              <a href="https://testingcf.jsdelivr.net/npm/ubzone@2.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">testingcf.jsdelivr.net/npm/ubzone@2.0.0/assets/index.svg</a>
+              <a href="https://gcore.jsdelivr.net/npm/ubzone@2.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">gcore.jsdelivr.net/npm/ubzone@2.0.0/assets/index.svg</a>
+              <a href="https://quantil.jsdelivr.net/npm/ubzone@2.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">quantil.jsdelivr.net/npm/ubzone@2.0.0/assets/index.svg</a>
+              <a href="https://originfastly.jsdelivr.net/npm/ubzone@2.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">originfastly.jsdelivr.net/npm/ubzone@2.0.0/assets/index.svg</a>
+              <a href="https://jsd.onmicrosoft.cn/npm/ubzone@2.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">jsd.onmicrosoft.cn/npm/ubzone@2.0.0/assets/index.svg</a>
+              <a href="https://cdn.jsdmirror.com/npm/ubzone@2.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdmirror.com/npm/ubzone@2.0.0/assets/index.svg</a>
+              <a href="https://cdn.staticdelivr.com/npm/ubzone@2.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.staticdelivr.com/npm/ubzone@2.0.0/assets/index.svg</a>
+
+              <div style="color:#ff8c00;font-size:12px;font-weight:bold;margin-top:8px;">npm @3.0.0 Links</div>
+              <a href="https://raw.esm.sh/ubzone@3.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">raw.esm.sh/ubzone@3.0.0/assets/index.svg</a>
+              <a href="https://esm.sh/ubzone@3.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">esm.sh/ubzone@3.0.0/assets/index.svg</a>
+              <a href="https://unpkg.com/ubzone@3.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">unpkg.com/ubzone@3.0.0/assets/index.svg</a>
+              <a href="https://cdn.jsdelivr.net/npm/ubzone@3.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdelivr.net/npm/ubzone@3.0.0/assets/index.svg</a>
+              <a href="https://fastly.jsdelivr.net/npm/ubzone@3.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">fastly.jsdelivr.net/npm/ubzone@3.0.0/assets/index.svg</a>
+              <a href="https://testingcf.jsdelivr.net/npm/ubzone@3.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">testingcf.jsdelivr.net/npm/ubzone@3.0.0/assets/index.svg</a>
+              <a href="https://gcore.jsdelivr.net/npm/ubzone@3.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">gcore.jsdelivr.net/npm/ubzone@3.0.0/assets/index.svg</a>
+              <a href="https://quantil.jsdelivr.net/npm/ubzone@3.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">quantil.jsdelivr.net/npm/ubzone@3.0.0/assets/index.svg</a>
+              <a href="https://originfastly.jsdelivr.net/npm/ubzone@3.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">originfastly.jsdelivr.net/npm/ubzone@3.0.0/assets/index.svg</a>
+              <a href="https://jsd.onmicrosoft.cn/npm/ubzone@3.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">jsd.onmicrosoft.cn/npm/ubzone@3.0.0/assets/index.svg</a>
+              <a href="https://cdn.jsdmirror.com/npm/ubzone@3.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdmirror.com/npm/ubzone@3.0.0/assets/index.svg</a>
+              <a href="https://cdn.staticdelivr.com/npm/ubzone@3.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.staticdelivr.com/npm/ubzone@3.0.0/assets/index.svg</a>
+
+              <div style="color:#ff8c00;font-size:12px;font-weight:bold;margin-top:8px;">npm @latest Links</div>
+              <a href="https://cdn.jsdelivr.net/npm/ubzone@latest/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdelivr.net/npm/ubzone@latest/assets/index.svg</a>
+              <a href="https://fastly.jsdelivr.net/npm/ubzone@latest/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">fastly.jsdelivr.net/npm/ubzone@latest/assets/index.svg</a>
+              <a href="https://testingcf.jsdelivr.net/npm/ubzone@latest/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">testingcf.jsdelivr.net/npm/ubzone@latest/assets/index.svg</a>
+              <a href="https://gcore.jsdelivr.net/npm/ubzone@latest/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">gcore.jsdelivr.net/npm/ubzone@latest/assets/index.svg</a>
+              <a href="https://quantil.jsdelivr.net/npm/ubzone@latest/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">quantil.jsdelivr.net/npm/ubzone@latest/assets/index.svg</a>
+              <a href="https://originfastly.jsdelivr.net/npm/ubzone@latest/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">originfastly.jsdelivr.net/npm/ubzone@latest/assets/index.svg</a>
+              <a href="https://jsd.onmicrosoft.cn/npm/ubzone@latest/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">jsd.onmicrosoft.cn/npm/ubzone@latest/assets/index.svg</a>
+              <a href="https://cdn.jsdmirror.com/npm/ubzone@latest/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdmirror.com/npm/ubzone@latest/assets/index.svg</a>
+              <a href="https://cdn.staticdelivr.com/npm/ubzone@latest/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.staticdelivr.com/npm/ubzone@latest/assets/index.svg</a>
+
+              <div style="color:#ff8c00;font-size:12px;font-weight:bold;margin-top:8px;">npm @1.0.0 Links with /combine</div>
+              <a href="https://cdn.jsdelivr.net/combine/npm/ubzone@1.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdelivr.net/combine/npm/ubzone@1.0.0/assets/index.svg</a>
+              <a href="https://fastly.jsdelivr.net/combine/npm/ubzone@1.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">fastly.jsdelivr.net/combine/npm/ubzone@1.0.0/assets/index.svg</a>
+              <a href="https://testingcf.jsdelivr.net/combine/npm/ubzone@1.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">testingcf.jsdelivr.net/combine/npm/ubzone@1.0.0/assets/index.svg</a>
+              <a href="https://gcore.jsdelivr.net/combine/npm/ubzone@1.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">gcore.jsdelivr.net/combine/npm/ubzone@1.0.0/assets/index.svg</a>
+              <a href="https://quantil.jsdelivr.net/combine/npm/ubzone@1.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">quantil.jsdelivr.net/combine/npm/ubzone@1.0.0/assets/index.svg</a>
+              <a href="https://originfastly.jsdelivr.net/combine/npm/ubzone@1.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">originfastly.jsdelivr.net/combine/npm/ubzone@1.0.0/assets/index.svg</a>
+              <a href="https://jsd.onmicrosoft.cn/combine/npm/ubzone@1.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">jsd.onmicrosoft.cn/combine/npm/ubzone@1.0.0/assets/index.svg</a>
+              <a href="https://cdn.jsdmirror.com/combine/npm/ubzone@1.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdmirror.com/combine/npm/ubzone@1.0.0/assets/index.svg</a>
+              <a href="https://cdn.staticdelivr.com/combine/npm/ubzone@1.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.staticdelivr.com/combine/npm/ubzone@1.0.0/assets/index.svg</a>
+
+              <div style="color:#ff8c00;font-size:12px;font-weight:bold;margin-top:8px;">npm @2.0.0 with /combine Links</div>
+              <a href="https://cdn.jsdelivr.net/combine/npm/ubzone@2.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdelivr.net/combine/npm/ubzone@2.0.0/assets/index.svg</a>
+              <a href="https://fastly.jsdelivr.net/combine/npm/ubzone@2.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">fastly.jsdelivr.net/combine/npm/ubzone@2.0.0/assets/index.svg</a>
+              <a href="https://testingcf.jsdelivr.net/combine/npm/ubzone@2.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">testingcf.jsdelivr.net/combine/npm/ubzone@2.0.0/assets/index.svg</a>
+              <a href="https://gcore.jsdelivr.net/combine/npm/ubzone@2.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">gcore.jsdelivr.net/combine/npm/ubzone@2.0.0/assets/index.svg</a>
+              <a href="https://quantil.jsdelivr.net/combine/npm/ubzone@2.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">quantil.jsdelivr.net/combine/npm/ubzone@2.0.0/assets/index.svg</a>
+              <a href="https://originfastly.jsdelivr.net/combine/npm/ubzone@2.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">originfastly.jsdelivr.net/combine/npm/ubzone@2.0.0/assets/index.svg</a>
+              <a href="https://jsd.onmicrosoft.cn/combine/npm/ubzone@2.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">jsd.onmicrosoft.cn/combine/npm/ubzone@2.0.0/assets/index.svg</a>
+              <a href="https://cdn.staticdelivr.com/combine/npm/ubzone@2.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.staticdelivr.com/combine/npm/ubzone@2.0.0/assets/index.svg</a>
+
+              <div style="color:#ff8c00;font-size:12px;font-weight:bold;margin-top:8px;">npm @3.0.0 with /combine Links</div>
+              <a href="https://cdn.jsdelivr.net/combine/npm/ubzone@3.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdelivr.net/combine/npm/ubzone@3.0.0/assets/index.svg</a>
+              <a href="https://fastly.jsdelivr.net/combine/npm/ubzone@3.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">fastly.jsdelivr.net/combine/npm/ubzone@3.0.0/assets/index.svg</a>
+              <a href="https://testingcf.jsdelivr.net/combine/npm/ubzone@3.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">testingcf.jsdelivr.net/combine/npm/ubzone@3.0.0/assets/index.svg</a>
+              <a href="https://gcore.jsdelivr.net/combine/npm/ubzone@3.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">gcore.jsdelivr.net/combine/npm/ubzone@3.0.0/assets/index.svg</a>
+              <a href="https://quantil.jsdelivr.net/combine/npm/ubzone@3.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">quantil.jsdelivr.net/combine/npm/ubzone@3.0.0/assets/index.svg</a>
+              <a href="https://originfastly.jsdelivr.net/combine/npm/ubzone@3.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">originfastly.jsdelivr.net/combine/npm/ubzone@3.0.0/assets/index.svg</a>
+              <a href="https://jsd.onmicrosoft.cn/combine/npm/ubzone@3.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">jsd.onmicrosoft.cn/combine/npm/ubzone@3.0.0/assets/index.svg</a>
+              <a href="https://cdn.staticdelivr.com/combine/npm/ubzone@3.0.0/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.staticdelivr.com/combine/npm/ubzone@3.0.0/assets/index.svg</a>
+
+              <div style="color:#ff8c00;font-size:12px;font-weight:bold;margin-top:8px;">npm @latest with /combine Links</div>
+              <a href="https://cdn.jsdelivr.net/combine/npm/ubzone@latest/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdelivr.net/combine/npm/ubzone@latest/assets/index.svg</a>
+              <a href="https://fastly.jsdelivr.net/combine/npm/ubzone@latest/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">fastly.jsdelivr.net/combine/npm/ubzone@latest/assets/index.svg</a>
+              <a href="https://testingcf.jsdelivr.net/combine/npm/ubzone@latest/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">testingcf.jsdelivr.net/combine/npm/ubzone@latest/assets/index.svg</a>
+              <a href="https://gcore.jsdelivr.net/combine/npm/ubzone@latest/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">gcore.jsdelivr.net/combine/npm/ubzone@latest/assets/index.svg</a>
+              <a href="https://quantil.jsdelivr.net/combine/npm/ubzone@latest/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">quantil.jsdelivr.net/combine/npm/ubzone@latest/assets/index.svg</a>
+              <a href="https://originfastly.jsdelivr.net/combine/npm/ubzone@latest/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">originfastly.jsdelivr.net/combine/npm/ubzone@latest/assets/index.svg</a>
+              <a href="https://jsd.onmicrosoft.cn/combine/npm/ubzone@latest/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">jsd.onmicrosoft.cn/combine/npm/ubzone@latest/assets/index.svg</a>
+              <a href="https://cdn.staticdelivr.com/combine/npm/ubzone@latest/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.staticdelivr.com/combine/npm/ubzone@latest/assets/index.svg</a>
+
+              <div style="color:#ff8c00;font-size:12px;font-weight:bold;margin-top:8px;">npm No @ with /combine Links</div>
+              <a href="https://cdn.jsdelivr.net/combine/npm/ubzone/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdelivr.net/combine/npm/ubzone/assets/index.svg</a>
+              <a href="https://fastly.jsdelivr.net/combine/npm/ubzone/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">fastly.jsdelivr.net/combine/npm/ubzone/assets/index.svg</a>
+              <a href="https://testingcf.jsdelivr.net/combine/npm/ubzone/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">testingcf.jsdelivr.net/combine/npm/ubzone/assets/index.svg</a>
+              <a href="https://gcore.jsdelivr.net/combine/npm/ubzone/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">gcore.jsdelivr.net/combine/npm/ubzone/assets/index.svg</a>
+              <a href="https://quantil.jsdelivr.net/combine/npm/ubzone/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">quantil.jsdelivr.net/combine/npm/ubzone/assets/index.svg</a>
+              <a href="https://originfastly.jsdelivr.net/combine/npm/ubzone/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">originfastly.jsdelivr.net/combine/npm/ubzone/assets/index.svg</a>
+              <a href="https://jsd.onmicrosoft.cn/combine/npm/ubzone/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">jsd.onmicrosoft.cn/combine/npm/ubzone/assets/index.svg</a>
+              <a href="https://cdn.staticdelivr.com/combine/npm/ubzone/assets/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.staticdelivr.com/combine/npm/ubzone/assets/index.svg</a>
+
+              <div style="color:#ff8c00;font-size:12px;font-weight:bold;margin-top:8px;">Single File Code!</div>
+              <a href="https://padlet.com/botlobbiesfn2/padlet-esk7ujq9dsouvtbu/wish/9kmlZVpzw6gEapgV" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">padlet.com/padlet-esk7ujq9dsouvtbu/wish/9kmlZVpzw6gEapgV</a>
+              <a href="https://drive.google.com/file/d/1GU-DAUkUaAKshwFoVyCDmiOMdflpt0Xy/view?usp=sharing" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">drive.google.com (Single File)</a>
 
             </div>
           </div>
@@ -1425,6 +1567,8 @@
             </div>
           </div>
 
+
+
         </div>
       </div>
 
@@ -1480,21 +1624,63 @@
       <div class="tab-content" id="forms">
         <h2>Forms</h2>
         <p style="margin-bottom:20px;">Use my forms so I can make this the best possible site! - ʊռɮʟօƈӄɛɖʐօռɛ</p>
-        <div class="games-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;">
-          <div class="game-card" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSdWxjZZFtjsaoPVHv5F3Ipu-4kwLAtmHhswUpslxrJg5lQdRA/viewform','_blank')">
-            <div style="padding:20px;"><h3>Request Form</h3><p style="color:#aaa;font-size:13px;margin-top:8px;">Submit game or feature requests</p></div>
+        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:16px;">
+          <div class="game-card" style="width:300px;flex:0 0 300px;" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSdWxjZZFtjsaoPVHv5F3Ipu-4kwLAtmHhswUpslxrJg5lQdRA/viewform','_blank')">
+            <div style="padding:20px;">
+              <div style="display:flex;align-items:center;justify-content:center;gap:8px;">
+                <svg fill="var(--accent)" width="15px" height="15px" viewBox="0 0 16 16" id="request-16px" xmlns="http://www.w3.org/2000/svg">
+                  <path id="Path_49" data-name="Path 49" d="M30.5,16a.489.489,0,0,1-.191-.038A.5.5,0,0,1,30,15.5V13h-.5A2.5,2.5,0,0,1,27,10.5v-8A2.5,2.5,0,0,1,29.5,0h11A2.5,2.5,0,0,1,43,2.5v8A2.5,2.5,0,0,1,40.5,13H33.707l-2.853,2.854A.5.5,0,0,1,30.5,16Zm-1-15A1.5,1.5,0,0,0,28,2.5v8A1.5,1.5,0,0,0,29.5,12h1a.5.5,0,0,1,.5.5v1.793l2.146-2.147A.5.5,0,0,1,33.5,12h7A1.5,1.5,0,0,0,42,10.5v-8A1.5,1.5,0,0,0,40.5,1ZM36,9a1,1,0,1,0-1,1A1,1,0,0,0,36,9Zm1-4a2,2,0,0,0-4,0,.5.5,0,0,0,1,0,1,1,0,1,1,1,1,.5.5,0,0,0,0,1A2,2,0,0,0,37,5Z" transform="translate(-27)"/>
+                </svg>
+                <h3 style="font-size:20px;">Request Form</h3>
+              </div>
+              <p style="color:#aaa;font-size:13px;margin-top:8px;text-align:center;">Submit game or feature requests</p>
+            </div>
           </div>
-          <div class="game-card" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSfmzC2HDePeAKoBtHVqS6VQFz6V_zX8ow7RPEEIc-nVjtCHSQ/viewform','_blank')">
-            <div style="padding:20px;"><h3>Partner Form</h3><p style="color:#aaa;font-size:13px;margin-top:8px;">Apply to become a partner</p></div>
+          <div class="game-card" style="width:300px;flex:0 0 300px;" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSfmzC2HDePeAKoBtHVqS6VQFz6V_zX8ow7RPEEIc-nVjtCHSQ/viewform','_blank')">
+            <div style="padding:20px;">
+              <div style="display:flex;align-items:center;justify-content:center;gap:8px;">
+                <svg width="15" height="15" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" fill="var(--accent)">
+                  <path d="M4,16 L15,16.001 C16.0538182,16.001 16.9181157,16.8164855 16.9945109,17.8516842 L17,18.001 L17,20.5 C16.999,24.7 12.713,26 9.5,26 C6.35126,26 2.1710504,24.75148 2.00510151,20.7485328 L2,20.5 L2,18 C2,16.9461818 2.81639669,16.0818843 3.85080841,16.0054891 L4,16 Z M17.22,16.001 L24,16 C25.0538182,16 25.9181157,16.8163967 25.9945109,17.8508084 L26,18 L26,20 C25.999,23.759 22.57,25 20,25 C18.942,25 17.741,24.785 16.691,24.275 C17.4432667,23.3808667 17.9315867,22.2428222 17.9933526,20.8112714 L18,20.5 L18,18.001 C18,17.2991818 17.7512397,16.6601736 17.3461307,16.1500909 L17.22,16.001 L24,16 L17.22,16.001 Z M9.5,3 C12.537,3 15,5.463 15,8.5 C15,11.537 12.537,14 9.5,14 C6.463,14 4,11.537 4,8.5 C4,5.463 6.463,3 9.5,3 Z M20.5,5 C22.985,5 25,7.015 25,9.5 C25,11.985 22.985,14 20.5,14 C18.015,14 16,11.985 16,9.5 C16,7.015 18.015,5 20.5,5 Z"/>
+                </svg>
+                <h3 style="font-size:20px;">Partner Form</h3>
+              </div>
+              <p style="color:#aaa;font-size:13px;margin-top:8px;text-align:center;">Apply to become a partner</p>
+            </div>
           </div>
-          <div class="game-card" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScGv2Cdpgmx6QLYJtV-SA7E3zfVDA60NpmdRsWjEMZ-7q8vMg/viewform','_blank')">
-            <div style="padding:20px;"><h3>Review Form</h3><p style="color:#aaa;font-size:13px;margin-top:8px;">Leave a review or report issues</p></div>
+          <div class="game-card" style="width:300px;flex:0 0 300px;" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScGv2Cdpgmx6QLYJtV-SA7E3zfVDA60NpmdRsWjEMZ-7q8vMg/viewform','_blank')">
+            <div style="padding:20px;">
+              <div style="display:flex;align-items:center;justify-content:center;gap:8px;">
+                <svg width="15px" height="15px" viewBox="0 0 32 32" id="icon" xmlns="http://www.w3.org/2000/svg" fill="var(--accent)">
+                  <rect x="18" y="26" width="8" height="2"/>
+                  <rect x="18" y="22" width="12" height="2"/>
+                  <rect x="18" y="18" width="12" height="2"/>
+                  <polygon points="20.549 11.217 16 2 11.451 11.217 1.28 12.695 8.64 19.87 6.902 30 14 26.269 14 24.009 9.559 26.344 10.611 20.208 10.789 19.171 10.036 18.438 5.578 14.091 11.739 13.196 12.779 13.045 13.245 12.102 16 6.519 18.755 12.102 19.221 13.045 20.261 13.196 27.715 14.281 28 12.3 20.549 11.217"/>
+                </svg>
+                <h3 style="font-size:20px;">Review Form</h3>
+              </div>
+              <p style="color:#aaa;font-size:13px;margin-top:8px;text-align:center;">Leave a review or report issues</p>
+            </div>
           </div>
-          <div class="game-card" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSe8zWp-H6VZ5bdfgvjdCFbZSicmqEkrbbbv6jF7D_q8adFBpA/viewform','_blank')">
-            <div style="padding:20px;"><h3>Link Suggestion Form</h3><p style="color:#aaa;font-size:13px;margin-top:8px;">Suggest links to add to the site</p></div>
+          <div class="game-card" style="width:300px;flex:0 0 300px;" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSe8zWp-H6VZ5bdfgvjdCFbZSicmqEkrbbbv6jF7D_q8adFBpA/viewform','_blank')">
+            <div style="padding:20px;">
+              <div style="display:flex;align-items:center;justify-content:center;gap:8px;">
+                <svg width="15" height="15" viewBox="5 6 26 24" xmlns="http://www.w3.org/2000/svg" fill="var(--accent)">
+                  <path d="M17.6,24.32l-2.46,2.44a4,4,0,0,1-5.62,0,3.92,3.92,0,0,1,0-5.55l4.69-4.65a4,4,0,0,1,5.62,0,3.86,3.86,0,0,1,1,1.71A2,2,0,0,0,21.1,18l1.29-1.28a5.89,5.89,0,0,0-1.15-1.62,6,6,0,0,0-8.44,0L8.1,19.79a5.91,5.91,0,0,0,0,8.39,6,6,0,0,0,8.44,0l3.65-3.62c-.17,0-.33,0-.5,0A8,8,0,0,1,17.6,24.32Z" fill="currentColor"/>
+                  <path d="M28.61,7.82a6,6,0,0,0-8.44,0l-3.65,3.62c.17,0,.33,0,.49,0h0a8,8,0,0,1,2.1.28l2.46-2.44a4,4,0,0,1,5.62,0,3.92,3.92,0,0,1,0,5.55l-4.69,4.65a4,4,0,0,1-5.62,0,3.86,3.86,0,0,1-1-1.71,2,2,0,0,0-.28.23l-1.29,1.28a5.89,5.89,0,0,0,1.15,1.62,6,6,0,0,0,8.44,0l4.69-4.65a5.92,5.92,0,0,0,0-8.39Z" fill="currentColor"/>
+                </svg>
+                <h3 style="font-size:20px;">Link Form</h3>
+              </div>
+              <p style="color:#aaa;font-size:13px;margin-top:8px;text-align:center;">Suggest links to add to the site</p>
+            </div>
           </div>
-          <div class="game-card" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSe0vNYCYlHHgSkRcYnfroNqcV3LfjKeE73GRNxjqRgroY72mw/viewform','_blank')">
-            <div style="padding:20px;"><h3>Music Form</h3><p style="color:#aaa;font-size:13px;margin-top:8px;">Submit music recommendations</p></div>
+          <div class="game-card" style="width:300px;flex:0 0 300px;" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSe0vNYCYlHHgSkRcYnfroNqcV3LfjKeE73GRNxjqRgroY72mw/viewform','_blank')">
+            <div style="padding:20px;">
+              <div style="display:flex;align-items:center;justify-content:center;gap:8px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"></path></svg>
+                <h3 style="font-size:20px;">Music Form</h3>
+              </div>
+              <p style="color:#aaa;font-size:13px;margin-top:8px;text-align:center;">Submit music recommendations</p>
+            </div>
           </div>
         </div>
       </div>
@@ -1567,11 +1753,11 @@
       <div class="gv-left">
         <button class="gv-btn" id="gv-newwindow" onclick="window.open(gvOrigUrl,'_blank')" style="display:none"><svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 7V5c0-1.105.895-2 2-2h11c1.105 0 2 .895 2 2v14c0 1.105-.895 2-2 2H8c-1.105 0-2-.895-2-2v-2h2v2h11V5H8v2H6zm5.5-.5l-1.414 1.414L13.172 11H3v2h10.172l-3.086 3.086L11.5 17.5 17 12l-5.5-5.5z" fill="currentColor"/></svg> New Tab</button>
         <button class="gv-btn" id="gv-popout" onclick="popOutGame()"><svg fill="currentColor" width="16" height="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M15.694 13.541l2.666 2.665 5.016-5.017 2.59 2.59 0.004-7.734-7.785-0.046 2.526 2.525-5.017 5.017zM25.926 16.945l-1.92-1.947 0.035 9.007-16.015 0.009 0.016-15.973 8.958-0.04-2-2h-7c-1.104 0-2 0.896-2 2v16c0 1.104 0.896 2 2 2h16c1.104 0 2-0.896 2-2l-0.074-7.056z"/></svg> Pop Out</button>
-        <button class="gv-btn" onclick="toggleConsoleOverlay()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg> Console</button>
+        <button class="gv-btn" id="gv-console" onclick="toggleConsoleOverlay()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg> Console</button>
       </div>
       <span class="game-title" id="gv-title">Loading...</span>
       <div class="gv-right">
-        <button class="gv-btn" onclick="refreshGame()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
+        <button class="gv-btn" id="gv-refresh" onclick="refreshGame()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
         <button class="gv-btn" id="gv-download" onclick="downloadGameHTML()"><svg width="16" height="16" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.50005 1.04999C7.74858 1.04999 7.95005 1.25146 7.95005 1.49999V8.41359L10.1819 6.18179C10.3576 6.00605 10.6425 6.00605 10.8182 6.18179C10.994 6.35753 10.994 6.64245 10.8182 6.81819L7.81825 9.81819C7.64251 9.99392 7.35759 9.99392 7.18185 9.81819L4.18185 6.81819C4.00611 6.64245 4.00611 6.35753 4.18185 6.18179C4.35759 6.00605 4.64251 6.00605 4.81825 6.18179L7.05005 8.41359V1.49999C7.05005 1.25146 7.25152 1.04999 7.50005 1.04999ZM2.5 10C2.77614 10 3 10.2239 3 10.5V12C3 12.5539 3.44565 13 3.99635 13H11.0012C11.5529 13 12 12.5528 12 12V10.5C12 10.2239 12.2239 10 12.5 10C12.7761 10 13 10.2239 13 10.5V12C13 13.1041 12.1062 14 11.0012 14H3.99635C2.89019 14 2 13.103 2 12V10.5C2 10.2239 2.22386 10 2.5 10Z" fill="currentColor"/></svg></button>
         <button class="gv-btn" onclick="toggleGameFullscreen()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
         <button class="gv-btn" onclick="closeGameViewer()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Close</button>
@@ -1582,7 +1768,7 @@
         <div class="spinner"></div>
         Loading game...
       </div>
-      <iframe id="game-frame" sandbox="allow-scripts allow-forms allow-popups allow-same-origin" allowfullscreen></iframe>
+      <iframe id="game-frame" allow="fullscreen"></iframe>
     </div>
   </div>
 
@@ -1772,6 +1958,40 @@
         cursorCanvas.style.display = 'none';
         loadingScreen.classList.add('hidden');
         setTimeout(() => { loadingScreen.style.display = 'none'; mainContent.classList.add('visible'); }, 500);
+        var bgAudio = document.getElementById('bg-music');
+        var trackList = [
+          'https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/oobe.mp3',
+          'https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/far.mp3',
+          'https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/chirp.mp3',
+          'https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/strad.mp3',
+          'https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/wait.mp3',
+          'https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/dog.mp3',
+          'https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/cat.mp3'
+        ];
+        function playRandomTrack() {
+          var next;
+          do { next = trackList[Math.floor(Math.random() * trackList.length)]; }
+          while (next === bgAudio.src && trackList.length > 1);
+          bgAudio.src = next;
+          bgAudio.play();
+        }
+        bgAudio.volume = 0;
+        bgAudio.onended = playRandomTrack;
+        bgAudio.src = trackList[Math.floor(Math.random() * trackList.length)];
+        var playPromise = bgAudio.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(function() {
+            // Browser blocked autoplay — wait for first click
+            document.addEventListener('click', function firstClick() {
+              playRandomTrack();
+              document.removeEventListener('click', firstClick);
+            }, { once: true });
+          });
+        }
+        var fadeInterval = setInterval(function() {
+          if (bgAudio.volume >= 0.5) { clearInterval(fadeInterval); return; }
+          bgAudio.volume = Math.min(bgAudio.volume + 0.05, 0.5);
+        }, 200);
 
       }
     }, 50);
@@ -1792,6 +2012,8 @@
     document.querySelectorAll('.sidebar-btn').forEach(btn => {
       if (btn.dataset.tab === 'console') {
         btn.addEventListener('click', function() { toggleConsoleOverlay(); });
+      } else if (btn.dataset.tab === 'music') {
+        // Music button handled by onclick
       } else {
         btn.addEventListener('click', () => switchTab(btn.dataset.tab));
       }
@@ -1876,8 +2098,10 @@
       gvOrigUrl = url;
       currentGameName = name;
       currentGameDirectSrc = directSrc;
-      document.getElementById('gv-newwindow').style.display = directSrc ? '' : 'none';
       url = String(url || '').trim();
+      var isDirect = directSrc || url.indexOf('quizizz.com') !== -1;
+      document.getElementById('gv-newwindow').style.display = isDirect ? '' : 'none';
+      document.getElementById('gv-popout').style.display = isDirect ? '' : 'none';
       if (!url.startsWith('http')) {
         document.getElementById('gv-title').textContent = name;
         const gvLoad = document.getElementById('gv-loading');
@@ -1887,7 +2111,19 @@
       }
 
       startLoading(name);
-      loadGameInFrame(makeCdnFriendly(url), directSrc);
+      loadGameInFrame(makeCdnFriendly(url), isDirect);
+    }
+
+    function toggleMusic() {
+      const audio = document.getElementById('bg-music');
+      const icon = document.getElementById('music-icon');
+      if (audio.paused) {
+        audio.play();
+        icon.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/></svg>';
+      } else {
+        audio.pause();
+        icon.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>';
+      }
     }
 
     function startLoading(name) {
@@ -1895,35 +2131,62 @@
       document.getElementById('gv-title').textContent = name;
       gvLoading.style.display = 'block';
       gameFrame.removeAttribute('srcdoc');
-      gameFrame.src = '';
+      gameFrame.src = 'about:blank';
       gameViewer.classList.add('active');
       gameViewer.classList.remove('fullscreen-mode');
+      ['gv-console','gv-refresh','gv-download'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.style.display = '';
+      });
+    }
+
+    function fetchTool(url, name) {
+      startLoading(name || 'Tool');
+      ['gv-newwindow','gv-popout','gv-console','gv-refresh','gv-download'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      });
+      fetch(url + '?t=' + Date.now())
+        .then(function(r) { if (!r.ok) throw new Error(); return r.text(); })
+        .then(function(html) {
+          html = html.replace(/https?:\/\/cdn\.jsdelivr\.net\//g, 'https://testingcf.jsdelivr.net/');
+          var doc = gameFrame.contentDocument || gameFrame.contentWindow.document;
+          doc.open();
+          doc.write(html);
+          doc.close();
+          gvLoading.style.display = 'none';
+          try {
+            var fw = gameFrame.contentWindow;
+            if (fw) {
+              ['log','error','warn','info'].forEach(function(m) {
+                var orig = fw.console[m];
+                fw.console[m] = function() {
+                  var args = Array.prototype.slice.call(arguments);
+                  try { if (window._lc && window._lc[m]) window._lc[m].apply(window._lc, args); } catch(e) {}
+                  if (orig) orig.apply(fw.console, args);
+                };
+              });
+            }
+          } catch(e) {}
+        })
+        .catch(function() { closeGameViewer(); });
     }
 
     function loadGameInFrame(url, direct) {
-      function loadViaSrcdoc(html) {
-        gameFrame.sandbox = 'allow-scripts allow-forms allow-popups allow-same-origin';
-        gameFrame.srcdoc = html;
-        gvLoading.style.display = 'none';
+      if (!direct) {
+        closeGameViewer();
+        var w = window.open('', '_blank');
+        if (w) {
+          w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap" rel="stylesheet"><style>html,body{margin:0;padding:0;width:100%;height:100%;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:"Pixelify Sans",sans-serif;color:#ff6600}</style></head><body>');
+          w.document.write('<img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/UNBL0CKEDZ0NE%20in%20Text.png" alt="UNBL0CKEDZ0NE" style="height:28px;opacity:0.6;margin-bottom:16px">');
+          w.document.write('<div style="font-size:22px">Loading game...</div>');
+          w.document.write('<script>var u=' + JSON.stringify(url) + ';fetch(u+"?t="+Date.now()).then(function(r){if(!r.ok)throw new Error();return r.text()}).then(function(h){h=h.replace(/https?:\\/\\/cdn\\.jsdelivr\\.net\\//g,"https://testingcf.jsdelivr.net/");document.open();document.write(h);document.close()}).catch(function(){document.body.innerHTML=""})<\/script>');
+          w.document.close();
+        }
+        return;
       }
-      function loadViaSrc(u) {
-        gameFrame.sandbox = 'allow-scripts allow-forms allow-popups allow-same-origin';
-        gameFrame.removeAttribute('srcdoc');
-        gameFrame.src = u;
-        gvLoading.style.display = 'none';
-      }
-      if (direct) { loadViaSrc(url); return; }
-      fetch(url)
-        .then(r => { if (!r.ok) throw new Error(); return r.text(); })
-        .then(html => {
-          const baseMatch = html.match(/<head[^>]*>/i);
-          const patched = baseMatch
-            ? html.replace(baseMatch[0], baseMatch[0] + '<base href="' + url.replace(/"/g,'&quot;') + '">')
-            : '<head><base href="' + url.replace(/"/g,'&quot;') + '"></head>' + html;
-          loadViaSrcdoc(patched);
-        })
-        .catch(() => { loadViaSrc(url); });
-      setTimeout(() => { gvLoading.style.display = 'none'; }, 12000);
+      gameFrame.src = url;
+      gameFrame.onload = function() { gvLoading.style.display = 'none'; };
     }
 
     function closeGameViewer() {
@@ -2536,7 +2799,7 @@
               if (result && result.url) playUrl = result.url;
             } catch(e) { console.warn('Lumin play failed:', e); }
           }
-          openGame(g.name, playUrl, !!g._ubz);
+          openGame(g.name, playUrl, isLumin || !!g._ubz);
         };
         gameGrid.appendChild(card);
       });
